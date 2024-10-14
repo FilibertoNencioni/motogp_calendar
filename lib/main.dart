@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:motogp_calendar/app_theme.dart';
 import 'package:motogp_calendar/pages/home.dart';
-import 'package:motogp_calendar/pages/sync.dart';
+import 'package:motogp_calendar/pages/settings.dart';
 import 'package:motogp_calendar/styles/variables.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:motogp_calendar/utils/http.dart';
 import 'package:motogp_calendar/utils/user_preferences.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
@@ -33,7 +33,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-
   List<PersistentTabConfig> _tabs() => [
     PersistentTabConfig(
       screen: const Home(),
@@ -46,30 +45,34 @@ class MyApp extends StatelessWidget {
       ),
     ),
     PersistentTabConfig(
-      screen: Sync(),
+      screen: Settings(),
       item: ItemConfig(
         icon: const Icon(Icons.sync),
-        title: "Sincronizza",
+        title: "Settings",
         activeColorSecondary: Color.fromARGB(122, 244, 67, 54),
         activeForegroundColor: Colors.black,
         iconSize: 22,
-
       ),
     ),
   ];
 
-
-
   @override
   Widget build(BuildContext context) {
+    Locale defaultLocale = Locale(UserPreferences.getLocale());
+
     return MaterialApp(
       title: 'MotoGP Calendar',
       debugShowCheckedModeBanner: false,
       builder: EasyLoading.init(),
-      theme:_buildTheme(),
+      theme: AppTheme.getTheme(),
+      supportedLocales: [
+        Locale('en'), // English
+        Locale('it'), // Italian
+      ],
+      locale: defaultLocale,
       home: SafeArea(
         child: PersistentTabView(
-          backgroundColor: backgroundColor,
+          backgroundColor: backgroundColor, //TODO: migrate to theme
           tabs: _tabs(),
           navBarBuilder: (navBarConfig) => Style1BottomNavBar(
             navBarConfig: navBarConfig,
@@ -79,11 +82,5 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  ThemeData _buildTheme() {
-  var baseTheme = ThemeData();
 
-  return baseTheme.copyWith(
-    textTheme: GoogleFonts.robotoTextTheme(baseTheme.textTheme),
-  );
-}
 }

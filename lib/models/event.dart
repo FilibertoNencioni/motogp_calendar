@@ -85,5 +85,31 @@ class Event{
     }
   }
 
-  
+  List<BroadcastsByDate> getBroadcastsByDate(){
+    List<BroadcastsByDate> broadcastsByDate = [];
+
+    for (var broadcast in broadcasts) {
+      int indexOfBroadcast = broadcastsByDate.indexWhere((e) => DateUtils.isSameDay(e.date, broadcast.dateStart));
+      if(indexOfBroadcast == -1){
+        BroadcastsByDate newBroadcast = BroadcastsByDate(broadcasts: [broadcast], date: broadcast.dateStart);
+        broadcastsByDate.add(newBroadcast);
+      }else{
+        broadcastsByDate[indexOfBroadcast].broadcasts.add(broadcast);
+      }
+    }
+
+    return broadcastsByDate;
+  }
+}
+
+
+//Service model
+class BroadcastsByDate{
+  List<BroadCast> broadcasts;
+  DateTime date;
+
+  BroadcastsByDate({
+    required this.broadcasts,
+    required this.date
+  });
 }

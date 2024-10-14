@@ -7,6 +7,7 @@ class BroadCast{
   String type;
   String kind;
   String status;
+  String category;
 
   BroadCast({
     required this.id,
@@ -16,7 +17,8 @@ class BroadCast{
     required this.dateEnd,
     required this.kind,
     required this.status,
-    required this.type
+    required this.type,
+    required this.category
   });
 
   factory BroadCast.fromJson(Map<String, dynamic> json) => BroadCast(
@@ -28,5 +30,6 @@ class BroadCast{
     type: json["type"],
     status: json["status"],
     kind: json["kind"],
+    category: json["category"]["name"]
   );
 }
