@@ -190,7 +190,7 @@ packages:
     source: sdk
     version: "0.0.0"
   go_router:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: go_router
       sha256: "6f1b756f6e863259a99135ff3c95026c3cdca17d10ebef2bba2261a25ddc8bbc"
@@ -357,14 +357,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
-  persistent_bottom_nav_bar_v2:
-    dependency: "direct main"
-    description:
-      name: persistent_bottom_nav_bar_v2
-      sha256: fcbb84757e598791b15321a314604e74719d098c51891b4c7555ae1dd901f582
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.3.1"
   platform:
     dependency: transitive
     description:

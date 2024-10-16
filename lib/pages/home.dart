@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:motogp_calendar/components/event_card.dart';
 import 'package:motogp_calendar/models/event.dart';
-import 'package:motogp_calendar/pages/event_detail.dart';
 import 'package:motogp_calendar/services/motogp.service.dart';
+import 'package:motogp_calendar/utils/app_router.dart';
+import 'package:go_router/go_router.dart';
 
 class Home extends StatefulWidget{
   const Home({super.key});
@@ -67,6 +68,6 @@ class HomeState extends State<Home>{
   }
   
   handleRaceTap(Event event){
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => EventDetail(event: event,)));
+    context.push("/${AppRouter.routeEventDetail}", extra: event);
   }
 }

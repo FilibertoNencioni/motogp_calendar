@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:motogp_calendar/components/accordion.dart';
 import 'package:motogp_calendar/components/accordion_list.dart';
 import 'package:motogp_calendar/models/event.dart';
-import 'package:motogp_calendar/styles/variables.dart';
 
 class EventDetail extends StatelessWidget{
   final Event event;
@@ -23,7 +22,7 @@ class EventDetail extends StatelessWidget{
         //BACK BUTTON (Always on top)
         Container(
           decoration: BoxDecoration(
-            color: backgroundColor,
+            color: Colors.white,
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.1),
