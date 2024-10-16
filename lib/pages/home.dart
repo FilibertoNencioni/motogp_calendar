@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:motogp_calendar/components/event_card.dart';
 import 'package:motogp_calendar/models/event.dart';
 import 'package:motogp_calendar/services/motogp.service.dart';
@@ -42,7 +41,7 @@ class HomeState extends State<Home>{
               child: Text(
                 "MotoGP Gare",
                 textAlign: TextAlign.start,
-                style: GoogleFonts.roboto(textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),),
+                style: Theme.of(context).textTheme.headlineMedium,
               ),
             ),
             SizedBox(height: 32,),

@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:motogp_calendar/components/accordion.dart';
 import 'package:motogp_calendar/components/accordion_list.dart';
@@ -60,7 +59,7 @@ class EventDetail extends StatelessWidget{
                     (event.circuit != null)?
                       "${event.name}, ${event.circuit!.country}" :
                       event.name, 
-                    style: GoogleFonts.roboto(textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),),
+                      style: Theme.of(context).textTheme.headlineMedium,
                   )
                 ),
                 SizedBox(height: 8,),

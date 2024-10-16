@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -25,7 +24,7 @@ class SettingsState extends State<Settings> {
               child: Text(
                 "Settings",
                 textAlign: TextAlign.start,
-                style: GoogleFonts.roboto(textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),),
+                style: Theme.of(context).textTheme.headlineMedium,
               ),
             ),
             SizedBox(height: 32,),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:motogp_calendar/models/broadcast.dart';
 import 'package:motogp_calendar/models/circuit.dart';
+import 'package:motogp_calendar/utils/enum/e_event_status.dart';
 
 class Event{
   String id;
@@ -61,26 +62,36 @@ class Event{
   ///1 = non iniziato (futura)
   ///2 = è in corso
   ///3 = è finito
-  int getEventStatus(){
+  EEventStatus getEventStatus(){
     DateTime now = DateTime.now();
 
     if(dateEnd == null){
       //Evento giornaliero
       if(DateUtils.isSameDay(now, dateStart)){
-        return 2;
-      }else if(now.isBefore(dateStart)){
-        return 1;
+        return EEventStatus.inProgress;
+      }else if(now.isAfter(dateStart)){
+        return EEventStatus.finished;
       }else{
-        return 3;
+        DateTime firstDayOfRaceWeek = dateStart.subtract(Duration(days: dateStart.weekday + 1));
+        if(DateUtils.isSameDay(now, firstDayOfRaceWeek) || now.isAfter(firstDayOfRaceWeek)){
+          return EEventStatus.thisWeek;
+        }else{
+          return EEventStatus.notStarted;
+        }
       }
     }else{
       //Evento NON giornaliero, controllo se oggi è compreso
       if(dateStart.isBefore(now) && dateEnd!.isAfter(now)){
-        return 2;
-      }else if(dateStart.isAfter(now)){
-        return 1;
+        return EEventStatus.inProgress;
+      }else if(now.isAfter(dateEnd!)){
+        return EEventStatus.finished;
       }else{
-        return 3;
+        DateTime firstDayOfRaceWeek = dateStart.subtract(Duration(days: dateStart.weekday + 1));
+        if(DateUtils.isSameDay(now, firstDayOfRaceWeek) || now.isAfter(firstDayOfRaceWeek)){
+          return EEventStatus.thisWeek;
+        }else{
+          return EEventStatus.notStarted;
+        }
       }
     }
   }
