@@ -66,7 +66,5 @@ class HomeState extends State<Home>{
     );
   }
   
-  handleRaceTap(Event event){
-    context.push("/${AppRouter.routeEventDetail}", extra: event);
-  }
+  handleRaceTap(Event event) => context.push("/${AppRouter.routeEventDetail}", extra: event);
 }

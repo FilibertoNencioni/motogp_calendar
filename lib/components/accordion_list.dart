@@ -16,22 +16,6 @@ class AccordionListState extends State<AccordionList> with TickerProviderStateMi
   ///Contiene i controller per le animations. Ogniuno corrisponde ad un signolo accordion.
   List<AnimationController> iconsAnimationControllers = [];
 
-  //TODO: implementare https://api.flutter.dev/flutter/widgets/SizeTransition-class.html
-  //Vedere se inserire anche questi animation controller nello stessa lista
-  toggleAccordion(Accordion accordion){
-    List<String> tmpOpenedAccordion = openedAccordion;
-    if(openedAccordion.indexWhere((e)=> e == accordion.title) == -1){
-      tmpOpenedAccordion.add(accordion.title);    
-      iconsAnimationControllers[widget.items.indexOf(accordion)].forward();
-    }else{
-      tmpOpenedAccordion.remove(accordion.title);
-      iconsAnimationControllers[widget.items.indexOf(accordion)].reverse();
-    }
-
-    setState(() => openedAccordion = tmpOpenedAccordion);
-  }
-
-  bool checkIfIsOpen(String name) => openedAccordion.indexWhere((e) => e == name) != -1;
 
   @override
   void initState() {
@@ -53,6 +37,21 @@ class AccordionListState extends State<AccordionList> with TickerProviderStateMi
     }
   }
 
+
+  toggleAccordion(Accordion accordion){
+    List<String> tmpOpenedAccordion = openedAccordion;
+    if(isAccordionOpened(accordion.title)){
+      tmpOpenedAccordion.remove(accordion.title);
+      iconsAnimationControllers[widget.items.indexOf(accordion)].reverse();
+    }else{
+      tmpOpenedAccordion.add(accordion.title);    
+      iconsAnimationControllers[widget.items.indexOf(accordion)].forward();
+    }
+    setState(() => openedAccordion = tmpOpenedAccordion);
+  }
+
+  bool isAccordionOpened(String name) => openedAccordion.indexWhere((e) => e == name) != -1;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -62,7 +61,6 @@ class AccordionListState extends State<AccordionList> with TickerProviderStateMi
           GestureDetector(
             onTap: () => toggleAccordion(e),
             child: Container(
-              // decoration: BoxDecoration(color: Colors.red),
               padding: EdgeInsets.symmetric(vertical: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -78,15 +76,18 @@ class AccordionListState extends State<AccordionList> with TickerProviderStateMi
           ),
           
           //BODY
-          Visibility(
-            visible: checkIfIsOpen(e.title),
-            child: Container(
-              padding: EdgeInsets.only(bottom: 16),
-              child: e.child,
-            )
+          AnimatedSize(
+            duration: Duration(milliseconds: 150),
+            curve: Curves.easeInOut,
+            child: isAccordionOpened(e.title) ?  
+              Container(
+                padding: EdgeInsets.only(bottom: 16),
+                child: e.child,
+              ) :
+              SizedBox(width: double.infinity,),
           ),
 
-          //SEPARATOR
+          //SEPARATOR (if it's not the last item)
           Visibility(
             visible: widget.items.last != e,
             child: Divider(
