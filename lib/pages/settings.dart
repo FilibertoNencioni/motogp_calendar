@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:motogp_calendar/components/select.dart';
+import 'package:motogp_calendar/utils/constants.dart';
+import 'package:motogp_calendar/utils/types/app_locale.dart';
+import 'package:motogp_calendar/utils/user_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -9,6 +14,8 @@ class Settings extends StatefulWidget {
 }
 
 class SettingsState extends State<Settings> {
+  AppLocale selectedLocale = UserPreferences.getLocale();
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -22,21 +29,29 @@ class SettingsState extends State<Settings> {
             SizedBox(
               width: double.infinity,
               child: Text(
-                "Settings",
+                AppLocalizations.of(context)!.settings,
                 textAlign: TextAlign.start,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
             ),
             SizedBox(height: 32,),
 
-            //TODO: gestire selezione locale
-            //Gestire quindi anche l'i18n + update user preferences
-
-            
-            
+            Select(
+              label:AppLocalizations.of(context)!.changeAppLanguage,
+              value: selectedLocale,
+              displayItem: (t)=>t.displayName,
+              items: appLocales,
+              onChanged: handleLocaleSelect,
+            )
+ 
           ]
         )
       )
     );
+  }
+
+  void handleLocaleSelect(AppLocale locale) {
+    setState(()=>selectedLocale = locale);
+    UserPreferences.setLocale(locale.code, context);
   }
 }

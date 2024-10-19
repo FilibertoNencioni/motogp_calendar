@@ -30,6 +30,14 @@ class AppTheme {
           fontWeight: FontWeight.bold,
           fontSize: 18,
         )
+      ),
+      iconTheme: IconThemeData(
+        color: Colors.black
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: appGrey,
+        )
       )
     );
 

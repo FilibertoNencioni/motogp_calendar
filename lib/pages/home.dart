@@ -4,6 +4,7 @@ import 'package:motogp_calendar/models/event.dart';
 import 'package:motogp_calendar/services/motogp.service.dart';
 import 'package:motogp_calendar/utils/app_router.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Home extends StatefulWidget{
   const Home({super.key});
@@ -39,7 +40,7 @@ class HomeState extends State<Home>{
             SizedBox(
               width: double.infinity,
               child: Text(
-                "MotoGP Gare",
+                AppLocalizations.of(context)!.races,
                 textAlign: TextAlign.start,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),

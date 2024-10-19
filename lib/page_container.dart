@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PageContainer extends StatelessWidget{
   final StatefulNavigationShell navigationShell;
@@ -21,11 +22,11 @@ class PageContainer extends StatelessWidget{
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.calendar_today),
-              label: 'Gare'
+              label: AppLocalizations.of(context)!.races
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings),
-              label: 'Impostazioni'
+              label: AppLocalizations.of(context)!.settings
             )
           ],
         ),

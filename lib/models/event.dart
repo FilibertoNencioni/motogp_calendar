@@ -72,7 +72,7 @@ class Event{
       }else if(now.isAfter(dateStart)){
         return EEventStatus.finished;
       }else{
-        DateTime firstDayOfRaceWeek = dateStart.subtract(Duration(days: dateStart.weekday + 1));
+        DateTime firstDayOfRaceWeek = dateStart.subtract(Duration(days: dateStart.weekday - 1));
         if(DateUtils.isSameDay(now, firstDayOfRaceWeek) || now.isAfter(firstDayOfRaceWeek)){
           return EEventStatus.thisWeek;
         }else{
@@ -86,7 +86,7 @@ class Event{
       }else if(now.isAfter(dateEnd!)){
         return EEventStatus.finished;
       }else{
-        DateTime firstDayOfRaceWeek = dateStart.subtract(Duration(days: dateStart.weekday + 1));
+        DateTime firstDayOfRaceWeek = dateStart.subtract(Duration(days: dateStart.weekday - 1));
         if(DateUtils.isSameDay(now, firstDayOfRaceWeek) || now.isAfter(firstDayOfRaceWeek)){
           return EEventStatus.thisWeek;
         }else{

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:motogp_calendar/app_theme.dart';
+import 'package:motogp_calendar/components/app_card.dart';
 import 'package:motogp_calendar/models/event.dart';
 import 'package:motogp_calendar/utils/enum/e_event_status.dart';
 
@@ -38,114 +39,99 @@ class EventCard extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    DateFormat dateFormat = DateFormat("dd/MM/yyyy");
+    DateFormat dateFormat = DateFormat.yMd(Localizations.localeOf(context).languageCode);
     EEventStatus eventStatus = event.getEventStatus();
 
-    return GestureDetector(
+    return AppCard(
       onTap: onTap,
-      child: 
-        //CARD
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(28),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.2),
-                spreadRadius: 2,
-                blurRadius: 6,
-              ),
-            ],
+      child: Column(
+        children: [
+          Container(
+            height: 120,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(24),
+              image: (event.imageUrl != null)?
+                DecorationImage(
+                  image: CachedNetworkImageProvider(event.imageUrl!),
+                  fit:BoxFit.cover
+                ): 
+                null,
+            ),
           ),
-          padding: EdgeInsets.all(10),
-          child: Column(
-            children: [
-              Container(
-                height: 120,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(24),
-                  image: (event.imageUrl != null)?DecorationImage(
-                    image: CachedNetworkImageProvider(event.imageUrl!),
-                    fit:BoxFit.cover
-
-                  ): null,
-                ),
-              ),
-              SizedBox(height: 8,),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal:4),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+          SizedBox(height: 8,),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal:4),
+            child: SizedBox(
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //EVENT NAME
+                  Text(
+                    event.name, 
+                    style: Theme.of(context).textTheme.titleLarge
+                  ),
+                  SizedBox(height: 6,),
+                  Row(
                     children: [
-                      //EVENT NAME
-                      Text(
-                        event.name, 
-                        style: Theme.of(context).textTheme.titleLarge
-                      ),
-                      SizedBox(height: 6,),
-                      Row(
-                        children: [
-                          //EVENT COUNTRY + DATES
-                          Expanded(
-                            flex: 1,
-                            child: Column(
+                      //EVENT COUNTRY + DATES
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          children: [
+                            //EVENT COUNTRY
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                //EVENT COUNTRY
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.location_pin, color: AppTheme.appGrey, size: 14,),
-                                    SizedBox(width: 8,),
-                                    Text(
-                                      event.circuit!.country, 
-                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: AppTheme.appGrey),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 6,),
-
-                                //EVENT DATES
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.calendar_today, color: AppTheme.appGrey, size: 14,),
-                                    SizedBox(width: 8,),
-                                    Text(
-                                      (event.dateEnd != null)?
-                                        "${dateFormat.format(event.dateStart)} - ${dateFormat.format(event.dateEnd!)}" :
-                                        dateFormat.format(event.dateStart), 
-                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: AppTheme.appGrey),
-                                    ),
-                                  ],
+                                Icon(Icons.location_pin, color: AppTheme.appGrey, size: 14,),
+                                SizedBox(width: 8,),
+                                Text(
+                                  event.circuit!.country, 
+                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: AppTheme.appGrey),
                                 ),
                               ],
-                            )
-                          ),
+                            ),
+                            SizedBox(height: 6,),
 
-                          //EVENT STATUS
-                          Container(
-                            decoration: BoxDecoration(
-                              color: getEventStatusColor(eventStatus),
-                              borderRadius: BorderRadius.circular(16),
+                            //EVENT DATES
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(Icons.calendar_today, color: AppTheme.appGrey, size: 14,),
+                                SizedBox(width: 8,),
+                                Text(
+                                  (event.dateEnd != null)?
+                                    "${dateFormat.format(event.dateStart)} - ${dateFormat.format(event.dateEnd!)}" :
+                                    dateFormat.format(event.dateStart), 
+                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: AppTheme.appGrey),
+                                ),
+                              ],
                             ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 14, vertical: 3),
-                              child: Text(
-                                getEventStatusText(eventStatus),
-                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white)),
-                            ),
-                          )
-                        ],
+                          ],
+                        )
+                      ),
+
+                      //EVENT STATUS
+                      Container(
+                        decoration: BoxDecoration(
+                          color: getEventStatusColor(eventStatus),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 14, vertical: 3),
+                          child: Text(
+                            getEventStatusText(eventStatus),
+                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white)),
+                        ),
                       )
                     ],
                   )
-                ),
-              ),
-            ],
+                ],
+              )
+            ),
           ),
-        ),      
+        ],
+      ),
     );
   }
 

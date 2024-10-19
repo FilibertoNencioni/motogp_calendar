@@ -26,7 +26,7 @@ class AppRouter {
                 routes: [
                   GoRoute(
                     path: routeEventDetail,
-                    builder: (context, state) => EventDetail(event: state.extra! as Event )
+                    builder: (context, state) => EventDetail(event: state.extra as Event)
                   )
                 ]
               ),

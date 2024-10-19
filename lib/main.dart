@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:motogp_calendar/app_theme.dart';
+import 'package:motogp_calendar/l10n/my_l10n.dart';
 import 'package:motogp_calendar/utils/app_router.dart';
+import 'package:motogp_calendar/utils/constants.dart';
 import 'package:motogp_calendar/utils/http.dart';
 import 'package:motogp_calendar/utils/user_preferences.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await UserPreferences.initUserPreferences();
+  initializeDateFormatting();
   
   //Modifica dello spinner di caricamento
   EasyLoading.instance
@@ -27,26 +33,34 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    Locale defaultLocale = Locale(UserPreferences.getLocale());
+  State<MyApp> createState() => _MyAppState();
+}
 
-    return MaterialApp.router(
-      title: 'MotoGP Calendar',
-      debugShowCheckedModeBanner: false,
-      builder: EasyLoading.init(),
-      theme: AppTheme.getTheme(),
-      routerConfig: AppRouter.router,
-      supportedLocales: [
-        Locale('en'), // English
-        Locale('it'), // Italian
-      ],
-      locale: defaultLocale,
-    );
-  }
+class _MyAppState extends State<MyApp> {
+  Locale appLocale = UserPreferences.getLocale().locale;
 
-
+  @override
+  Widget build(BuildContext context) =>
+    MyL10n(
+      (locale) => setState(() => appLocale = locale),
+      child: MaterialApp.router(
+        title: 'Moto Calendar',
+        debugShowCheckedModeBanner: false,
+        builder: EasyLoading.init(),
+        theme: AppTheme.getTheme(),
+        routerConfig: AppRouter.router,
+        supportedLocales: appLocales.map((e)=>e.locale),
+        locale: appLocale,
+        localizationsDelegates: [
+          AppLocalizations.delegate, //TODO: https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization#localizing-for-ios-updating-the-ios-app-bundle
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+      )
+    );    
 }
