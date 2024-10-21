@@ -19,7 +19,7 @@ class MyL10n extends InheritedWidget {
   }
 
   @override
-  bool updateShouldNotify(MyL10n old) {
+  bool updateShouldNotify(MyL10n oldWidget) {
     return true;
   }
 }

@@ -1,5 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:motogp_calendar/services/alert.service.dart';
+import 'package:motogp_calendar/utils/app_router.dart';
+import 'package:motogp_calendar/utils/enum/e_alert_status.dart';
+import 'package:motogp_calendar/utils/types/alert_options.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Http {
   static late Dio http;
@@ -38,8 +44,11 @@ class Http {
         },
         onError: (DioException error, ErrorInterceptorHandler handler) {
           deletePendingRequest();
-          //TODO: gestire snackbar
-          //https://stackoverflow.com/questions/60319051/how-to-create-and-use-snackbar-for-reuseglobally-in-flutter
+          BuildContext? context = AppRouter.router.configuration.navigatorKey.currentState?.context;
+          if(context != null){
+            AlertService().showAlert(AlertOptions(status: EAlertStatus.error, title:AppLocalizations.of(context)!.unexpectedError ));
+          }
+
           return handler.next(error);
         },
       ),

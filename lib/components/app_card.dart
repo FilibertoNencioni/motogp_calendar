@@ -2,10 +2,17 @@ import 'package:flutter/material.dart';
 
 class AppCard extends StatelessWidget{
   final void Function()? onTap;
-  final EdgeInsets? padding;
   final Widget child;
 
-  const AppCard({super.key, this.onTap, required this.child, this.padding});
+  ///Default padding is 10
+  final EdgeInsets padding;
+
+  const AppCard({
+    super.key, 
+    this.onTap, 
+    required this.child, 
+    this.padding = const EdgeInsets.all(10)
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +30,7 @@ class AppCard extends StatelessWidget{
             ),
           ],
         ),
-        padding: padding ?? EdgeInsets.all(10),
+        padding: padding,
         child: child
       )
     );

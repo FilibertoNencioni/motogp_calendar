@@ -3,5 +3,8 @@
     
     "races": "Gare",
     "settings": "Impostazioni",
-    "changeAppLanguage": "Cambia lingua applicazione"
+    "changeAppLanguage": "Cambia lingua applicazione",
+    "languageChanged":"Lingua cambiata con successo",
+    "unexpectedError": "Si è verificato un errore inaspettato, riprova più tardi"
+
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:motogp_calendar/components/select.dart';
+import 'package:motogp_calendar/services/alert.service.dart';
 import 'package:motogp_calendar/utils/constants.dart';
+import 'package:motogp_calendar/utils/enum/e_alert_status.dart';
+import 'package:motogp_calendar/utils/types/alert_options.dart';
 import 'package:motogp_calendar/utils/types/app_locale.dart';
 import 'package:motogp_calendar/utils/user_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -53,5 +56,16 @@ class SettingsState extends State<Settings> {
   void handleLocaleSelect(AppLocale locale) {
     setState(()=>selectedLocale = locale);
     UserPreferences.setLocale(locale.code, context);
+    
+    //Delayed to show alert in the selected language
+    Future.delayed(
+      Duration(milliseconds: 100), 
+      () {
+        if(mounted){
+          AlertService().showAlert(AlertOptions(status: EAlertStatus.success, title: AppLocalizations.of(context)!.languageChanged));
+        }
+      }
+    );
+    
   }
 }
