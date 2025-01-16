@@ -104,40 +104,6 @@ class _AlertState extends State<Alert> {
     );
   }
     
-  // @override
-  // Widget build(BuildContext context) =>
-  //   AnimatedSize(
-  //     duration: Duration(milliseconds: animationMs),
-  //     curve: Curves.easeInOut,
-  //     child: _isVisible ? 
-  //       GestureDetector(
-  //         onVerticalDragUpdate: (details) {
-  //           // Update the position based on the user's drag
-  //           setState(() {
-  //             _dragOffset += details.delta.dy;
-
-  //             // Ensure the user can only drag down
-  //             if (_dragOffset < 0) _dragOffset = 0;
-  //           });
-  //         },
-  //         onVerticalDragEnd: (details) {
-  //           // If dragged far enough down, dismiss the alert
-  //           if (_dragOffset > 100) {
-  //             AlertService().hideAlert();
-  //           } else {
-  //             // If not dragged far enough, return to the original position
-  //             setState(() {
-  //               _dragOffset = 0;
-  //             });
-  //           }
-  //         },
-  //         child: Transform.translate(
-  //           offset: Offset(0, _dragOffset), // Apply the drag offset
-  //           child: getAlert(),
-  //         ),
-  //       )
-  //     : SizedBox.shrink()
-  //   );
     
   Widget getAlert()=>
     AppCard(
@@ -146,9 +112,14 @@ class _AlertState extends State<Alert> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Text(alertOptions!.title, style: Theme.of(context).textTheme.bodyLarge),
+          Flexible(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                alertOptions!.title, 
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            )
           ),
           getIcon(),
         ],
