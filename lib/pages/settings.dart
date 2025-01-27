@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:motogp_calendar/components/select.dart';
+import 'package:motogp_calendar/models/broadcaster.dart';
 import 'package:motogp_calendar/services/alert.service.dart';
+import 'package:motogp_calendar/services/broadcaster.service.dart';
 import 'package:motogp_calendar/utils/constants.dart';
 import 'package:motogp_calendar/utils/enum/e_alert_status.dart';
 import 'package:motogp_calendar/utils/types/alert_options.dart';
@@ -18,6 +20,24 @@ class Settings extends StatefulWidget {
 
 class SettingsState extends State<Settings> {
   AppLocale selectedLocale = UserPreferences.getLocale();
+  Broadcaster? selectedBroadcaster;
+
+  List<Broadcaster> broadcasters = [];
+  
+  @override
+  void initState(){
+    super.initState();
+
+    BroadcasterService.get().then((r) {
+      int pkSelectedBroadcaster = UserPreferences.getBroadcaster();
+      Broadcaster tmpSelectedBroadcaster = r.firstWhere((b)=>b.pkBroadcaster == pkSelectedBroadcaster);
+      setState(() {
+        broadcasters = r;
+        selectedBroadcaster = tmpSelectedBroadcaster;
+      });
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +65,17 @@ class SettingsState extends State<Settings> {
               displayItem: (t)=>t.displayName,
               items: appLocales,
               onChanged: handleLocaleSelect,
+            ),
+
+            SizedBox(height: 32,),
+
+            Select(
+              label: AppLocalizations.of(context)!.changeDefaultBroadcasters,
+              value: selectedBroadcaster,
+              displayItem: (b)=>"${b?.countryEmoji} ${b?.name}",
+              items: broadcasters,
+              onChanged: handleBroadcasterSelect,
+              infoText: AppLocalizations.of(context)!.broadcasterInfoText,
             )
  
           ]
@@ -66,6 +97,18 @@ class SettingsState extends State<Settings> {
         }
       }
     );
-    
+  }
+
+  void handleBroadcasterSelect(Broadcaster? broadcatser) {
+    if(broadcatser == null) {
+      return;
+    }
+
+    setState(()=>selectedBroadcaster = broadcatser);
+    UserPreferences.setBroadcaster(broadcatser);    
+    AlertService().showAlert(AlertOptions(
+      status: EAlertStatus.success, 
+      title: AppLocalizations.of(context)!.broadcasterChanged
+    ));
   }
 }

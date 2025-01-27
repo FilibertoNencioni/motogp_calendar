@@ -1,17 +1,32 @@
 class Circuit{
-  String id;
+  int pkCircuit;
+  String guid;
   String name;
   String country;
+  String? flagPath;
+  String? placeholderPath;
+  DateTime? doi;
+  DateTime? dou;
 
   Circuit({
-    required this.id,
+    required this.pkCircuit,
+    required this.guid,
     required this.name,
     required this.country,
+    this.flagPath,
+    this.placeholderPath,
+    this.doi,
+    this.dou
   });
 
   factory Circuit.fromJson(Map<String, dynamic> json) => Circuit(
-    id: json["id"],
-    name: json["name"],
-    country: json["country"],
+    pkCircuit: json['pkCircuit'],
+    guid: json['guid'],
+    name: json['name'],
+    country: json['country'],
+    flagPath: json['flagPath'],
+    placeholderPath: json['placeholderPath'],
+    doi: json['doi'] != null ? DateTime.parse(json['doi']) : null,
+    dou: json['dou'] != null ? DateTime.parse(json['dou']) : null,
   );
 }

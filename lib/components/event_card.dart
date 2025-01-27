@@ -50,9 +50,9 @@ class EventCard extends StatelessWidget{
             height: 120,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(24),
-              image: (event.imageUrl != null)?
+              image: (event.circuit.placeholderPath != null)?
                 DecorationImage(
-                  image: CachedNetworkImageProvider(event.imageUrl!),
+                  image: CachedNetworkImageProvider(event.circuit.placeholderPath!),
                   fit:BoxFit.cover
                 ): 
                 null,
@@ -86,7 +86,7 @@ class EventCard extends StatelessWidget{
                                 Icon(Icons.location_pin, color: AppTheme.appGrey, size: 14,),
                                 SizedBox(width: 8,),
                                 Text(
-                                  event.circuit!.country, 
+                                  event.circuit.country, 
                                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: AppTheme.appGrey),
                                 ),
                               ],
@@ -100,9 +100,9 @@ class EventCard extends StatelessWidget{
                                 Icon(Icons.calendar_today, color: AppTheme.appGrey, size: 14,),
                                 SizedBox(width: 8,),
                                 Text(
-                                  (event.dateEnd != null)?
-                                    "${dateFormat.format(event.dateStart)} - ${dateFormat.format(event.dateEnd!)}" :
-                                    dateFormat.format(event.dateStart), 
+                                  (!DateUtils.isSameDay(event.startDate, event.endDate))?
+                                    "${dateFormat.format(event.startDate)} - ${dateFormat.format(event.endDate)}" :
+                                    dateFormat.format(event.startDate), 
                                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: AppTheme.appGrey),
                                 ),
                               ],

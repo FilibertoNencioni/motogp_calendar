@@ -20,6 +20,7 @@ class AppTheme {
   static ThemeData getTheme() {
     ThemeData theme = ThemeData(
       useMaterial3: true,
+      primaryColor: Colors.black,
       scaffoldBackgroundColor: Colors.white,
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: Colors.white,
@@ -43,8 +44,9 @@ class AppTheme {
         color: Colors.black
       ),
       textButtonTheme: TextButtonThemeData(
+        
         style: TextButton.styleFrom(
-          foregroundColor: appGrey,
+          foregroundColor: Colors.black,
         )
       ),
       colorScheme: ColorScheme.light(

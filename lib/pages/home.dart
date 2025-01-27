@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:motogp_calendar/components/event_card.dart';
 import 'package:motogp_calendar/models/event.dart';
-import 'package:motogp_calendar/services/motogp.service.dart';
+import 'package:motogp_calendar/services/event.service.dart';
 import 'package:motogp_calendar/utils/app_router.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -19,10 +19,8 @@ class HomeState extends State<Home>{
   @override
   void initState() {
 
-    MotoGpService.getEventsByYear(DateTime.now().year).then((e) {
-      List<Event> tmpFilteredEvents = e.where((event)=>event.kind == "GP").toList();
-
-      setState(() => events = tmpFilteredEvents);
+    EventService.get(DateTime.now().year.toString()).then((e) {
+      setState(() => events = e);
     });
     super.initState();
   }
@@ -66,6 +64,6 @@ class HomeState extends State<Home>{
       )
     );
   }
-  
+
   handleRaceTap(Event event) => context.push("/${AppRouter.routeEventDetail}", extra: event);
 }

@@ -5,6 +5,11 @@
     "settings": "Impostazioni",
     "changeAppLanguage": "Cambia lingua applicazione",
     "languageChanged":"Lingua cambiata con successo",
-    "unexpectedError": "Si è verificato un errore inaspettato, riprova più tardi"
+    "unexpectedError": "Si è verificato un errore inaspettato, riprova più tardi",
+    "changeDefaultBroadcasters": "Cambia l'emittente principale",
+    "broadcasterChanged":"L'emittente principale è stato cambiato con successo",
+    "broadcasterInfoText": "L'emittente selezionato sarà utilizzato come predefinito per il recupero degli orari delle varie gare.",
+    "selectedBroadcaster": "Emittente selezionato"
+
 
 }

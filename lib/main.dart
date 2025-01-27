@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:motogp_calendar/app_theme.dart';
@@ -12,6 +14,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await loadEnv();
   await UserPreferences.initUserPreferences();
   initializeDateFormatting();
   
@@ -31,6 +34,12 @@ void main() async {
   Http.initHttp();
 
   runApp(const MyApp());
+}
+
+///  Load current env from .env file
+Future loadEnv() async {
+  String envFile = kDebugMode ? ".env.dev" : ".env";
+  await dotenv.load(fileName: envFile); 
 }
 
 class MyApp extends StatefulWidget {

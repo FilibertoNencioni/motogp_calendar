@@ -5,6 +5,10 @@
     "settings": "Settings",
     "changeAppLanguage":"Change app language",
     "languageChanged":"App language changed successfully",
-    "unexpectedError": "An unexpected error has occurred, please try again later"
+    "unexpectedError": "An unexpected error has occurred, please try again later",
+    "changeDefaultBroadcasters": "Change the default broadcaster",
+    "broadcasterChanged":"The default broadcaster has been changed",
+    "broadcasterInfoText": "The selected broadcaster will be used as the default for retrieving the schedules of the various races.",
+    "selectedBroadcaster": "Selected broadcaster"
 
 }
