@@ -5,6 +5,7 @@ import 'package:motogp_calendar/app_theme.dart';
 import 'package:motogp_calendar/components/app_card.dart';
 import 'package:motogp_calendar/models/event.dart';
 import 'package:motogp_calendar/utils/enum/e_event_status.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EventCard extends StatelessWidget{
   final Event event;
@@ -21,19 +22,23 @@ class EventCard extends StatelessWidget{
         return AppTheme.orangeEStatus;
       case EEventStatus.notStarted:
         return AppTheme.greyEStatus;
+      case EEventStatus.dismissed:
+        return AppTheme.dangerColor;
     }
   }
 
-  String getEventStatusText(EEventStatus eventStatus){
+  String getEventStatusText(EEventStatus eventStatus, BuildContext context){
     switch(eventStatus){
       case EEventStatus.finished:
-        return "Finished";
+        return AppLocalizations.of(context)!.finished;
       case EEventStatus.inProgress:
-        return "In progress";
+        return AppLocalizations.of(context)!.inProgress;
       case EEventStatus.thisWeek:
-        return "This week";
+        return AppLocalizations.of(context)!.thisWeek;
       case EEventStatus.notStarted:
-        return "Not started";
+        return AppLocalizations.of(context)!.notStarted;
+      case EEventStatus.dismissed:
+        return AppLocalizations.of(context)!.canceled;
     }
   }
 
@@ -120,7 +125,7 @@ class EventCard extends StatelessWidget{
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 14, vertical: 3),
                           child: Text(
-                            getEventStatusText(eventStatus),
+                            getEventStatusText(eventStatus, context),
                             style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white)),
                         ),
                       )

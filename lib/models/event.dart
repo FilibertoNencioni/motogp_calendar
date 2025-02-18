@@ -11,6 +11,7 @@ class Event{
   String season;
   DateTime startDate;
   DateTime endDate;
+  bool isDismissed;
   DateTime doi;
   DateTime? dou;
   Circuit circuit;
@@ -24,6 +25,7 @@ class Event{
     required this.season,
     required this.startDate,
     required this.endDate,
+    required this.isDismissed,
     required this.doi,
     this.dou,
     required this.circuit
@@ -38,6 +40,7 @@ class Event{
     season: json["season"],
     startDate: DateTime.parse(json["startDate"]),
     endDate: DateTime.parse(json["endDate"]),
+    isDismissed: json["isDismissed"],
     doi: DateTime.parse(json["doi"]),
     dou: json["dou"] != null ? DateTime.parse(json["dou"]) : null,
     circuit: Circuit.fromJson(json["circuit"])
@@ -50,6 +53,9 @@ class Event{
   ///3 = è finito
   EEventStatus getEventStatus(){
     DateTime now = DateTime.now();
+    if(isDismissed) {
+      return EEventStatus.dismissed;
+    }
 
     if(DateUtils.isSameDay(endDate, startDate)){
       //Evento giornaliero

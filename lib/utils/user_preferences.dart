@@ -8,16 +8,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserPreferences{
   static late SharedPreferences _userPref; 
 
+  //KEYS
+  static const String keyLocale = "user_locale";
+  static const String keyBroadcaster = "user_default_broadcaster";
+  static const String keyDismissedEvents = "user_dismissed_events";
+
+  //VALUES
+  static final ValueNotifier<Broadcaster?> userBroadcaster = ValueNotifier(null);
+  static final ValueNotifier<bool?> userGetDismissed = ValueNotifier(false);
+
   static Future initUserPreferences() async {
     _userPref = await SharedPreferences.getInstance();
   }
 
-  static final ValueNotifier<Broadcaster?> defaultBroadcaster = ValueNotifier(null);
-
-
-  //KEYS
-  static const String keyLocale = "user_locale";
-  static const String keyBroadcaster = "user_default_broadcaster";
   
   ///Return the user locale from his preferences
   static AppLocale getLocale(){
@@ -31,16 +34,20 @@ class UserPreferences{
   }
 
   ///Get the user default broadcaster ID 
-  static int getBroadcaster(){
-    int pkBroadcaster = int.parse(_userPref.getString(keyBroadcaster) ?? "1");
-    return pkBroadcaster;
-  }
+  static int getBroadcaster() =>
+    _userPref.getInt(keyBroadcaster) ?? 1;
 
   static void setBroadcaster(Broadcaster broadcaster) {
-    _userPref.setString(keyBroadcaster, broadcaster.pkBroadcaster.toString());
-
-    defaultBroadcaster.value = broadcaster;
+    _userPref.setInt(keyBroadcaster, broadcaster.pkBroadcaster);
+    userBroadcaster.value = broadcaster;
   }
+
+  static bool getDismissedEvent() => 
+    _userPref.getBool(UserPreferences.keyDismissedEvents) ?? false;
   
+  static void setDismissedEvent(bool newValue){
+    _userPref.setBool(UserPreferences.keyDismissedEvents, newValue);
+    userGetDismissed.value = newValue;
+  }
 
 }

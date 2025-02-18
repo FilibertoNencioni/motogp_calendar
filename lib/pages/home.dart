@@ -5,6 +5,7 @@ import 'package:motogp_calendar/services/event.service.dart';
 import 'package:motogp_calendar/utils/app_router.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:motogp_calendar/utils/user_preferences.dart';
 
 class Home extends StatefulWidget{
   const Home({super.key});
@@ -18,11 +19,19 @@ class HomeState extends State<Home>{
 
   @override
   void initState() {
+    getEvents();
 
-    EventService.get(DateTime.now().year.toString()).then((e) {
-      setState(() => events = e);
-    });
+    //ADD LISTENER TO GET DISMISSED EVENTS CHANGE
+    UserPreferences.userGetDismissed.addListener(() => getEvents());
+
     super.initState();
+  }
+
+  void getEvents(){
+    EventService.get(
+      DateTime.now().year.toString(),
+      getDismissed: UserPreferences.userGetDismissed.value ?? false
+    ).then((e) => setState(() => events = e));
   }
 
   @override

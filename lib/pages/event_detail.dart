@@ -52,8 +52,8 @@ class _EventDetailState extends State<EventDetail> {
 
 
     //ADD LISTENER TO BROADCATSER CHANGE
-    UserPreferences.defaultBroadcaster.addListener((){
-      Broadcaster? newDefaultBroadcaster = UserPreferences.defaultBroadcaster.value;
+    UserPreferences.userBroadcaster.addListener((){
+      Broadcaster? newDefaultBroadcaster = UserPreferences.userBroadcaster.value;
       if(newDefaultBroadcaster != null){
         handleBroadcasterChange(newDefaultBroadcaster);
       }
@@ -74,7 +74,10 @@ class _EventDetailState extends State<EventDetail> {
 
 
   Future<Map<DateTime, List<Broadcast>>> _getBroadcasts(int fkBroadcaster) async {
-    List<Broadcast> tmpBroadcasts = await EventService.getBroadcasts(widget.event.pkEvent, fkBroadcaster);
+    List<Broadcast> tmpBroadcasts = await EventService.getBroadcasts( 
+      widget.event.pkEvent, 
+      fkBroadcaster, 
+    );
     Map<DateTime, List<Broadcast>> tmpGroupedBroadcasts = {};
 
     for(int i = 0; i< tmpBroadcasts.length; i++){

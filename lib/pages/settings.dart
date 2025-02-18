@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:motogp_calendar/components/card_switch.dart';
 import 'package:motogp_calendar/components/select.dart';
 import 'package:motogp_calendar/models/broadcaster.dart';
 import 'package:motogp_calendar/services/alert.service.dart';
@@ -20,6 +21,7 @@ class Settings extends StatefulWidget {
 
 class SettingsState extends State<Settings> {
   AppLocale selectedLocale = UserPreferences.getLocale();
+  bool selectedGetDismissed = UserPreferences.getDismissedEvent();
   Broadcaster? selectedBroadcaster;
 
   List<Broadcaster> broadcasters = [];
@@ -76,8 +78,15 @@ class SettingsState extends State<Settings> {
               items: broadcasters,
               onChanged: handleBroadcasterSelect,
               infoText: AppLocalizations.of(context)!.broadcasterInfoText,
+            ),
+
+            SizedBox(height: 32,),
+
+            CardSwitch(
+              label: AppLocalizations.of(context)!.getDismissedEvent,
+              value: selectedGetDismissed,
+              onChanged: (e)=>handleChangeGetDismissed(e),
             )
- 
           ]
         )
       )
@@ -109,6 +118,15 @@ class SettingsState extends State<Settings> {
     AlertService().showAlert(AlertOptions(
       status: EAlertStatus.success, 
       title: AppLocalizations.of(context)!.broadcasterChanged
+    ));
+  }
+
+  void handleChangeGetDismissed(bool newValue) {
+    setState(()=>selectedGetDismissed = newValue);
+    UserPreferences.setDismissedEvent(newValue);    
+    AlertService().showAlert(AlertOptions(
+      status: EAlertStatus.success, 
+      title: AppLocalizations.of(context)!.generalOptionChanged
     ));
   }
 }
