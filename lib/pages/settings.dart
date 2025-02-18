@@ -9,7 +9,7 @@ import 'package:motogp_calendar/utils/enum/e_alert_status.dart';
 import 'package:motogp_calendar/utils/types/alert_options.dart';
 import 'package:motogp_calendar/utils/types/app_locale.dart';
 import 'package:motogp_calendar/utils/user_preferences.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:motogp_calendar/l10n/generated/app_localizations.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});

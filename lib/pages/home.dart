@@ -4,7 +4,7 @@ import 'package:motogp_calendar/models/event.dart';
 import 'package:motogp_calendar/services/event.service.dart';
 import 'package:motogp_calendar/utils/app_router.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:motogp_calendar/l10n/generated/app_localizations.dart';
 import 'package:motogp_calendar/utils/user_preferences.dart';
 
 class Home extends StatefulWidget{

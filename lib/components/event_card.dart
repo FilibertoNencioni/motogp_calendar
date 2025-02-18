@@ -5,7 +5,7 @@ import 'package:motogp_calendar/app_theme.dart';
 import 'package:motogp_calendar/components/app_card.dart';
 import 'package:motogp_calendar/models/event.dart';
 import 'package:motogp_calendar/utils/enum/e_event_status.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:motogp_calendar/l10n/generated/app_localizations.dart';
 
 class EventCard extends StatelessWidget{
   final Event event;

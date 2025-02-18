@@ -10,7 +10,7 @@ import 'package:motogp_calendar/services/alert.service.dart';
 import 'package:motogp_calendar/utils/app_router.dart';
 import 'package:motogp_calendar/utils/enum/e_alert_status.dart';
 import 'package:motogp_calendar/utils/types/alert_options.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:motogp_calendar/l10n/generated/app_localizations.dart';
 
 class Http {
   /// The http client used to interrogate the main service API
