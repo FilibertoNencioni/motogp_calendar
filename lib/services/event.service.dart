@@ -3,11 +3,11 @@ import 'package:motogp_calendar/models/event.dart';
 import 'package:motogp_calendar/utils/http.dart';
 
 class EventService{
-  static Future<List<Event>> get(String season) async {
+  static Future<List<Event>> get(String season, {bool getDismissed = false}) async {
     List<Event> events = [];
     var eventsResponse = await Http.serviceHttp.get<List>(
       "/Event", 
-      queryParameters: {'season': season}
+      queryParameters: {'season': season, 'getDismissed': getDismissed}
     );
     
     if (eventsResponse.statusCode == 200) {

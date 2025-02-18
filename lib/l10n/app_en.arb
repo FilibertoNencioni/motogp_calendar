@@ -9,6 +9,13 @@
     "changeDefaultBroadcasters": "Change the default broadcaster",
     "broadcasterChanged":"The default broadcaster has been changed",
     "broadcasterInfoText": "The selected broadcaster will be used as the default for retrieving the schedules of the various races.",
-    "selectedBroadcaster": "Selected broadcaster"
+    "selectedBroadcaster": "Selected broadcaster",
+    "getDismissedEvent": "Show cancelled events",
+    "generalOptionChanged": "Settings changed successfully",
+    "finished": "Finished",
+    "inProgress": "In progress",
+    "thisWeek": "This week",
+    "notStarted": "Not started",
+    "canceled": "Canceled"
 
 }
