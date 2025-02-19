@@ -55,4 +55,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get canceled => 'Cancellata';
+
+  @override
+  String get live => 'Live';
+
+  @override
+  String get delayed => 'Differita';
 }

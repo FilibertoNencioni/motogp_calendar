@@ -190,6 +190,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Canceled'**
   String get canceled;
+
+  /// No description provided for @live.
+  ///
+  /// In en, this message translates to:
+  /// **'Live'**
+  String get live;
+
+  /// No description provided for @delayed.
+  ///
+  /// In en, this message translates to:
+  /// **'Delayed'**
+  String get delayed;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

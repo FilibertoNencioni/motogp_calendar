@@ -16,6 +16,8 @@
     "inProgress": "In progress",
     "thisWeek": "This week",
     "notStarted": "Not started",
-    "canceled": "Canceled"
+    "canceled": "Canceled",
+    "live": "Live",
+    "delayed": "Delayed"
 
 }

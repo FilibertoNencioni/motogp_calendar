@@ -11,7 +11,10 @@ class EventCard extends StatelessWidget{
   final Event event;
   final void Function() onTap;
 
-  const EventCard({super.key, required this.event, required this.onTap});
+  /// If true it shows the "LIVE" badge
+  final bool showLiveBadge;
+
+  const EventCard({super.key, required this.event, required this.onTap, this.showLiveBadge = false});
   
   Color getEventStatusColor(EEventStatus eventStatus){
     switch(eventStatus){
@@ -51,17 +54,54 @@ class EventCard extends StatelessWidget{
       onTap: onTap,
       child: Column(
         children: [
-          Container(
-            height: 120,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(24),
-              image: (event.circuit.placeholderPath != null)?
-                DecorationImage(
-                  image: CachedNetworkImageProvider(event.circuit.placeholderPath!),
-                  fit:BoxFit.cover
-                ): 
-                null,
-            ),
+          Stack(
+            alignment: Alignment.topRight,
+            children: [
+              //IMAGE
+              Container(
+                height: 120,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(24),
+                  image: (event.circuit.placeholderPath != null)?
+                    DecorationImage(
+                      image: CachedNetworkImageProvider(event.circuit.placeholderPath!),
+                      fit:BoxFit.cover
+                    ): 
+                    null,
+                ),
+              ),
+
+              //LIVE INFO
+              Visibility(
+                visible: showLiveBadge && event.isLive != null && event.isLive == true,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.circle, 
+                          color: AppTheme.dangerColor,
+                          size: 8,
+                        ),
+                        SizedBox(width: 6,),
+                        Text(
+                          AppLocalizations.of(context)!.live.toUpperCase(),
+                          style: Theme.of(context).textTheme.labelLarge!.copyWith(fontWeight: FontWeight.bold),
+                        )
+
+                      ],
+                    ),
+                  )
+                )
+              )
+            ],
           ),
           SizedBox(height: 8,),
           Padding(
