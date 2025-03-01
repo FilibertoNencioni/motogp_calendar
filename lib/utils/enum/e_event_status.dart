@@ -2,5 +2,6 @@ enum EEventStatus {
   finished,
   inProgress,
   thisWeek,
-  notStarted
+  notStarted,
+  dismissed
 }

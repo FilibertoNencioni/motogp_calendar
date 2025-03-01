@@ -1,14 +1,21 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:motogp_calendar/services/alert.service.dart';
 import 'package:motogp_calendar/utils/app_router.dart';
 import 'package:motogp_calendar/utils/enum/e_alert_status.dart';
 import 'package:motogp_calendar/utils/types/alert_options.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:motogp_calendar/l10n/generated/app_localizations.dart';
 
 class Http {
-  static late Dio http;
+  /// The http client used to interrogate the main service API
+  static late Dio serviceHttp;
+
   static int pendingRequests = 0;
 
   static void addPendingRequest(){
@@ -30,9 +37,24 @@ class Http {
   }
 
   static void initHttp(){
-    http = Dio();
+    serviceHttp = Dio();
+    
+    String baseUrl = dotenv.get("BASE_URL", fallback: "");
+    if(baseUrl == ""){
+      throw Exception("Invalid or missing ENV variable \"BASE_URL\"");
+    }
+    serviceHttp.options.baseUrl = baseUrl;
 
-    http.interceptors.add(
+    if(kDebugMode){
+      // allow self-signed certificate
+      (serviceHttp.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
+        final client = HttpClient();
+        client.badCertificateCallback = (cert, host, port) => true;
+        return client;
+      };
+    }
+    //Add interceptors
+    serviceHttp.interceptors.add(
       InterceptorsWrapper(
         onRequest: (RequestOptions options, RequestInterceptorHandler handler) {
           addPendingRequest();

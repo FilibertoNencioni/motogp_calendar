@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:motogp_calendar/app_theme.dart';
 import 'package:motogp_calendar/components/app_card.dart';
 
 class Select<T> extends StatefulWidget{
@@ -23,8 +25,11 @@ class Select<T> extends StatefulWidget{
 
   /// Style of the item selected (in the list and not)
   final TextStyle? itemSelectedStyle;
+
+  /// Info text (shown by an info icon after the select title)
+  final String? infoText;
   
-  const Select({super.key, required this.label, required this.value, required this.items, this.onChanged, required this.displayItem, this.itemNotSelectedStyle, this.itemSelectedStyle});
+  const Select({super.key, required this.label, required this.value, required this.items, this.onChanged, required this.displayItem, this.itemNotSelectedStyle, this.itemSelectedStyle, this.infoText});
   
   @override
   State<Select<T>> createState() => _SelectState<T>();
@@ -56,7 +61,26 @@ class _SelectState<T> extends State<Select<T>> with TickerProviderStateMixin{
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //LABEL
-                Text(widget.label, style: Theme.of(context).textTheme.titleLarge),
+                Row(
+                  spacing: 8,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(widget.label, style: Theme.of(context).textTheme.titleLarge),
+                    if(widget.infoText != null)
+                      SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: IconButton(
+                          padding: EdgeInsets.all(0),
+                          icon: Icon(
+                            Icons.info_outline,
+                            size: 20,
+                          ),
+                          onPressed: () => showInfoText(),
+                        )
+                      )
+                  ],
+                ),
                 SizedBox(height: 12,),
 
                 //SELECTED ITEM (always first and visible)
@@ -104,6 +128,55 @@ class _SelectState<T> extends State<Select<T>> with TickerProviderStateMixin{
     toggleSelect();
   }  
 
-    
+  /// Open a dialog that contains the provided info text.
+  /// This can be done only if infoText property is provided to the widget
+  void showInfoText(){
+    if(widget.infoText == null){
+      return;
+    }
+
+    showAdaptiveDialog(
+      context: context, 
+      builder: (c) => Dialog(
+        child: AppCard(
+          padding: EdgeInsets.all(14),
+          child: Wrap(
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 8,
+                children: [
+                  //ICON
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Icon(Icons.info_outline, size: 36, color: AppTheme.infoColor,),
+                    ),
+                  ),
+
+                  //CONTENT
+                  Text(widget.infoText!, style: Theme.of(context).textTheme.bodyMedium,),
+
+                  //ACTIONS
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        child: Text("Ok"),
+                        onPressed: () => c.pop(),
+                      )
+                    ],
+                  )
+                ],
+              ) 
+            ]
+          )
+        )
+      )
+    );
+  }
 
 }

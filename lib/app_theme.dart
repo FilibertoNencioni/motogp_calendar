@@ -20,6 +20,7 @@ class AppTheme {
   static ThemeData getTheme() {
     ThemeData theme = ThemeData(
       useMaterial3: true,
+      primaryColor: Colors.black,
       scaffoldBackgroundColor: Colors.white,
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: Colors.white,
@@ -43,12 +44,41 @@ class AppTheme {
         color: Colors.black
       ),
       textButtonTheme: TextButtonThemeData(
+        
         style: TextButton.styleFrom(
-          foregroundColor: appGrey,
+          foregroundColor: Colors.black,
         )
       ),
       colorScheme: ColorScheme.light(
         error: dangerColor,
+      ),
+      switchTheme: SwitchThemeData(
+        splashRadius: 0,
+
+        //Circle color
+        thumbColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
+          if (states.contains(WidgetState.selected)) {
+            return Colors.white;
+          }
+          return Colors.black;
+        }),
+
+        //Icon inside circle
+        thumbIcon: WidgetStateProperty.resolveWith<Icon?>((Set<WidgetState> states) {
+          if (states.contains(WidgetState.selected)) {
+            return const Icon(Icons.check, color: Colors.black,);
+          }
+          return Icon(Icons.close, color: Colors.white);
+        }),
+
+        //Background color
+        trackColor: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
+          if (states.contains(WidgetState.selected)) {
+            return Colors.black;
+          }
+          return Colors.white;
+        }),
+
       )
     );
 

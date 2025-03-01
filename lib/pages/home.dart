@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:motogp_calendar/components/event_card.dart';
 import 'package:motogp_calendar/models/event.dart';
-import 'package:motogp_calendar/services/motogp.service.dart';
+import 'package:motogp_calendar/services/event.service.dart';
 import 'package:motogp_calendar/utils/app_router.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:motogp_calendar/l10n/generated/app_localizations.dart';
+import 'package:motogp_calendar/utils/user_preferences.dart';
 
 class Home extends StatefulWidget{
   const Home({super.key});
@@ -18,13 +19,21 @@ class HomeState extends State<Home>{
 
   @override
   void initState() {
+    getEvents();
 
-    MotoGpService.getEventsByYear(DateTime.now().year).then((e) {
-      List<Event> tmpFilteredEvents = e.where((event)=>event.kind == "GP").toList();
+    //ADD LISTENER TO GET DISMISSED EVENTS CHANGE
+    UserPreferences.userGetDismissed.addListener(() => getEvents());
+    UserPreferences.userBroadcaster.addListener(() => getEvents());
 
-      setState(() => events = tmpFilteredEvents);
-    });
     super.initState();
+  }
+
+  void getEvents(){
+    EventService.get(
+      DateTime.now().year.toString(),
+      fkBroadcaster: UserPreferences.getBroadcaster(),
+      getDismissed: UserPreferences.userGetDismissed.value ?? false
+    ).then((e) => setState(() => events = e));
   }
 
   @override
@@ -56,7 +65,11 @@ class HomeState extends State<Home>{
               itemBuilder: (context, index) => Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  EventCard(event: events[index], onTap: () => handleRaceTap(events[index]),),
+                  EventCard(
+                    event: events[index], 
+                    onTap: () => handleRaceTap(events[index]),
+                    showLiveBadge: UserPreferences.getBroadcaster() != 1, //If is not official broadcaster
+                  ),
                   (index == events.length - 1) ? SizedBox() : SizedBox(height: 24,)
                 ]
               )
@@ -66,6 +79,6 @@ class HomeState extends State<Home>{
       )
     );
   }
-  
+
   handleRaceTap(Event event) => context.push("/${AppRouter.routeEventDetail}", extra: event);
 }

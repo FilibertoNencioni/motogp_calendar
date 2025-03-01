@@ -1,35 +1,41 @@
-class BroadCast{
-  String id;
-  String shortName;
+class Broadcast{
+  int pkBroadcast;
+  int fkEvent;
+  int fkBroadcaster;
+  int? fkCategory;
+  String? guid;
   String name;
-  DateTime dateStart;
-  DateTime dateEnd;
-  String type;
-  String kind;
-  String status;
-  String category;
+  bool isLive;
+  DateTime startDate;
+  DateTime? endDate;
+  DateTime doi;
+  DateTime? dou;
 
-  BroadCast({
-    required this.id,
-    required this.shortName,
+  Broadcast({
+    required this.pkBroadcast,
+    required this.fkEvent,
+    required this.fkBroadcaster,
+    this.fkCategory,
+    required this.guid,
     required this.name,
-    required this.dateStart,
-    required this.dateEnd,
-    required this.kind,
-    required this.status,
-    required this.type,
-    required this.category
+    required this.isLive,
+    required this.startDate,
+    this.endDate,
+    required this.doi,
+    this.dou
   });
 
-  factory BroadCast.fromJson(Map<String, dynamic> json) => BroadCast(
-    id: json["id"],
-    shortName: json["shortname"],
-    name: json["name"],
-    dateStart: DateTime.parse(json["date_start"]),
-    dateEnd: DateTime.parse(json["date_end"]),
-    type: json["type"],
-    status: json["status"],
-    kind: json["kind"],
-    category: json["category"]["name"]
+  factory Broadcast.fromJson(Map<String, dynamic> json) => Broadcast(
+    pkBroadcast: json['pkBroadcast'],
+    fkEvent: json['fkEvent'],
+    fkBroadcaster: json['fkBroadcaster'],
+    fkCategory: json['fkCategory'],
+    guid: json['guid'],
+    name: json['name'],
+    isLive: json['isLive'],
+    startDate: DateTime.parse(json['startDate']),
+    endDate: json['endDate'] == null ? null : DateTime.parse(json['endDate']),
+    doi: DateTime.parse(json['doi']),
+    dou: json['dou'] == null ? null : DateTime.parse(json['dou']),
   );
 }
