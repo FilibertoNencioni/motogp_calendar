@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:motogp_calendar/app_theme.dart';
 import 'package:motogp_calendar/components/accordion.dart';
 import 'package:motogp_calendar/components/accordion_list.dart';
 import 'package:motogp_calendar/models/broadcast.dart';
@@ -165,23 +168,52 @@ class _EventDetailState extends State<EventDetail> {
                         Accordion(
                           title: toBeginningOfSentenceCase(dayFormat.format(entry.key)),
                           child: Column(
+                            spacing: 8,
                             children: entry.value.map((b)=>Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              spacing: 12,
                               children: [
+                               
+                                //IS LIVE ICON
+                                Visibility(
+                                  visible: b.fkBroadcaster != 1,
+                                  child: Row(
+                                    spacing: 6,
+                                    children: [
+                                      Icon(
+                                        Icons.circle,
+                                        color: b.isLive? 
+                                          AppTheme.dangerColor :
+                                          AppTheme.appGrey,
+                                        size: 8
+                                      ),
+                                      Text(
+                                        b.isLive?
+                                          AppLocalizations.of(context)!.live.toUpperCase() :
+                                          AppLocalizations.of(context)!.delayed.toUpperCase(),
+                                        style: Theme.of(context).textTheme.labelLarge!.copyWith(fontWeight: FontWeight.bold),
+                                      ),
+
+                                    ],
+                                  ) 
+                                ),
 
                                 //EVENT NAME
-                                Text.rich(
-                                  TextSpan(
-                                    children: [
-                                      if(b.fkCategory != null)
-                                        TextSpan(
-                                          text: "${_getCatName(b.fkCategory!)} - ",
-                                          style: TextStyle(fontWeight: FontWeight.bold),
-                                        ),
-                                      TextSpan(text: b.name)
-                                    ]
-                                  )
+                                Expanded(
+                                  child:Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        if(b.fkCategory != null)
+                                          TextSpan(
+                                            text: "${_getCatName(b.fkCategory!)} - ",
+                                            style: TextStyle(fontWeight: FontWeight.bold),
+                                          ),
+                                        TextSpan(text: b.name)
+                                      ]
+                                    ),                                      
+                                  ),                                        
                                 ),
+
+                              
 
                                 //EVENT HOUR
                                 Text("${hourFormat.format(b.startDate)} ${b.endDate != null ? "- ${hourFormat.format(b.endDate!)}" : ""}")

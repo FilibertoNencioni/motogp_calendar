@@ -23,6 +23,7 @@ class HomeState extends State<Home>{
 
     //ADD LISTENER TO GET DISMISSED EVENTS CHANGE
     UserPreferences.userGetDismissed.addListener(() => getEvents());
+    UserPreferences.userBroadcaster.addListener(() => getEvents());
 
     super.initState();
   }
@@ -30,6 +31,7 @@ class HomeState extends State<Home>{
   void getEvents(){
     EventService.get(
       DateTime.now().year.toString(),
+      fkBroadcaster: UserPreferences.getBroadcaster(),
       getDismissed: UserPreferences.userGetDismissed.value ?? false
     ).then((e) => setState(() => events = e));
   }
@@ -63,7 +65,11 @@ class HomeState extends State<Home>{
               itemBuilder: (context, index) => Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  EventCard(event: events[index], onTap: () => handleRaceTap(events[index]),),
+                  EventCard(
+                    event: events[index], 
+                    onTap: () => handleRaceTap(events[index]),
+                    showLiveBadge: UserPreferences.getBroadcaster() != 1, //If is not official broadcaster
+                  ),
                   (index == events.length - 1) ? SizedBox() : SizedBox(height: 24,)
                 ]
               )

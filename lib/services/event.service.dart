@@ -3,11 +3,22 @@ import 'package:motogp_calendar/models/event.dart';
 import 'package:motogp_calendar/utils/http.dart';
 
 class EventService{
-  static Future<List<Event>> get(String season, {bool getDismissed = false}) async {
+
+  /// Get the events of [season]
+  /// 
+  /// [getDismissed] get the dismissed (canceled) events
+  /// [fkBroadcaster] if specified it returns the "IS_LIVE" detail about the [fkBroadcaster]
+  static Future<List<Event>> get(String season, {bool getDismissed = false, int? fkBroadcaster}) async {
     List<Event> events = [];
+    
+    Map<String, dynamic> params = {'season': season, 'getDismissed': getDismissed,};
+    if(fkBroadcaster != null){
+      params['fkBroadcaster'] = fkBroadcaster;
+    }
+
     var eventsResponse = await Http.serviceHttp.get<List>(
       "/Event", 
-      queryParameters: {'season': season, 'getDismissed': getDismissed}
+      queryParameters: params
     );
     
     if (eventsResponse.statusCode == 200) {

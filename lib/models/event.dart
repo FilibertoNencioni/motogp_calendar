@@ -16,6 +16,9 @@ class Event{
   DateTime? dou;
   Circuit circuit;
 
+  /// For the requested broadcaster if the broadcasts is live or not 
+  bool? isLive;
+
   Event({
     required this.pkEvent,
     required this.fkCircuit,
@@ -28,7 +31,8 @@ class Event{
     required this.isDismissed,
     required this.doi,
     this.dou,
-    required this.circuit
+    required this.circuit,
+    this.isLive
   });
 
   factory Event.fromJson(Map<String, dynamic> json) => Event(
@@ -43,7 +47,8 @@ class Event{
     isDismissed: json["isDismissed"],
     doi: DateTime.parse(json["doi"]),
     dou: json["dou"] != null ? DateTime.parse(json["dou"]) : null,
-    circuit: Circuit.fromJson(json["circuit"])
+    circuit: Circuit.fromJson(json["circuit"]),
+    isLive: json["isLive"]
   );
 
   
