@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 class AppTheme {
   //OTHER COLORS
   static Color appGrey = Color.fromARGB(255, 132, 132, 132);
-
+  static Color appLightGrey = Color.fromARGB(255, 200, 200, 200);
   static Color successColor = Color.fromARGB(255, 76, 175, 80);
   static Color dangerColor = Color.fromARGB(255, 240, 18, 20);
   static Color infoColor = Color.fromARGB(255, 62, 178, 186);
