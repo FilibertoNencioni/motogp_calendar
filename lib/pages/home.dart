@@ -28,51 +28,46 @@ class HomeState extends State<Home>{
     super.initState();
   }
 
-  void getEvents(){
-    EventService.get(
+  Future getEvents({bool showLoading = true}) async {
+    List<Event> fetchedEvents =await EventService.get(
       DateTime.now().year.toString(),
       fkBroadcaster: UserPreferences.getBroadcaster(),
-      getDismissed: UserPreferences.userGetDismissed.value ?? false
-    ).then((e) => setState(() => events = e));
+      getDismissed: UserPreferences.userGetDismissed.value ?? false,
+      showLoading: showLoading
+    );
+    setState(() => events = fetchedEvents);
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      clipBehavior: Clip.none,
-      padding: EdgeInsets.symmetric(horizontal: 18, vertical: 32),
-      child: SizedBox(
-        width: double.infinity,
+    return RefreshIndicator(
+      onRefresh: ()=>getEvents(showLoading: false),
+      child: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(), //Required for pull to refresh
+        padding: EdgeInsets.symmetric(horizontal: 18, vertical: 32),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             //TITLE
-            SizedBox(
-              width: double.infinity,
-              child: Text(
-                AppLocalizations.of(context)!.races,
-                textAlign: TextAlign.start,
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
+            Text(
+              AppLocalizations.of(context)!.races,
+              textAlign: TextAlign.start,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
             SizedBox(height: 32,),
 
             //LIST
-            ListView.builder(
-              clipBehavior: Clip.none,
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: events.length,
-              itemBuilder: (context, index) => Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  EventCard(
-                    event: events[index], 
-                    onTap: () => handleRaceTap(events[index]),
+            Column(
+              spacing: 24,
+              children: [
+                ...events.map(
+                  (e)=> EventCard(
+                    event: e, 
+                    onTap: () => handleRaceTap(e),
                     showLiveBadge: UserPreferences.getBroadcaster() != 1, //If is not official broadcaster
-                  ),
-                  (index == events.length - 1) ? SizedBox() : SizedBox(height: 24,)
-                ]
-              )
+                  )
+                )
+              ],
             )
           ],
         ),

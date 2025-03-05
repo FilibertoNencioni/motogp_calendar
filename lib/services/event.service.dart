@@ -8,7 +8,12 @@ class EventService{
   /// 
   /// [getDismissed] get the dismissed (canceled) events
   /// [fkBroadcaster] if specified it returns the "IS_LIVE" detail about the [fkBroadcaster]
-  static Future<List<Event>> get(String season, {bool getDismissed = false, int? fkBroadcaster}) async {
+  static Future<List<Event>> get(
+    String season, {
+      bool getDismissed = false, 
+      int? fkBroadcaster, 
+      bool showLoading = true
+  }) async {
     List<Event> events = [];
     
     Map<String, dynamic> params = {'season': season, 'getDismissed': getDismissed,};
@@ -16,9 +21,10 @@ class EventService{
       params['fkBroadcaster'] = fkBroadcaster;
     }
 
-    var eventsResponse = await Http.serviceHttp.get<List>(
+    var eventsResponse = await Http().get<List>(
       "/Event", 
-      queryParameters: params
+      queryParams: params,
+      useLoading: showLoading
     );
     
     if (eventsResponse.statusCode == 200) {
@@ -31,9 +37,9 @@ class EventService{
   static Future<List<Broadcast>> getBroadcasts(int pkEvent, int fkBroadcaster) async {    
     List<Broadcast> broadcasts = [];
     
-    var broadcastsResponse = await Http.serviceHttp.get<List>(
+    var broadcastsResponse = await Http().get<List>(
       "/Event/$pkEvent/Broadcast", 
-      queryParameters: {'fkBroadcaster': fkBroadcaster}
+      queryParams: {'fkBroadcaster': fkBroadcaster}
     );
     
     if (broadcastsResponse.statusCode == 200) {

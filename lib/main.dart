@@ -7,7 +7,6 @@ import 'package:motogp_calendar/app_theme.dart';
 import 'package:motogp_calendar/l10n/my_l10n.dart';
 import 'package:motogp_calendar/utils/app_router.dart';
 import 'package:motogp_calendar/utils/constants.dart';
-import 'package:motogp_calendar/utils/http.dart';
 import 'package:motogp_calendar/utils/user_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:motogp_calendar/l10n/generated/app_localizations.dart';
@@ -23,15 +22,24 @@ void main() async {
     ..indicatorType = EasyLoadingIndicatorType.ring
     ..loadingStyle = EasyLoadingStyle.custom
     ..indicatorSize = 45.0
+    ..indicatorWidget = Container(
+      padding: EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle
+      ),
+      child: CircularProgressIndicator(
+        strokeWidth: 4,
+        strokeCap: StrokeCap.round,
+      )
+    )
+    ..indicatorColor = Colors.black
     ..radius = 10.0
-    ..progressColor = Colors.red
+    ..progressColor = Colors.black
     ..backgroundColor = Colors.transparent
-    ..indicatorColor = Colors.red
     ..textColor = Colors.black
     ..boxShadow = []
     ..dismissOnTap = false;
-
-  Http.initHttp();
 
   runApp(const MyApp());
 }

@@ -5,7 +5,7 @@ class BroadcasterService{
   static Future<List<Broadcaster>> get() async {
     List<Broadcaster> brodcasters = [];
 
-    var broadcastersResponse = await Http.serviceHttp.get<List>("/Broadcaster");
+    var broadcastersResponse = await Http().get<List>("/Broadcaster");
     
     if (broadcastersResponse.statusCode == 200) {
       brodcasters = broadcastersResponse.data!.map((e) => Broadcaster.fromJson((e as Map).cast())).toList();
@@ -15,7 +15,7 @@ class BroadcasterService{
   } 
 
   static Future<Broadcaster?> getByPk(int pkBroadcaster) async {
-    var broadcastersResponse = await Http.serviceHttp.get("/Broadcaster/$pkBroadcaster");
+    var broadcastersResponse = await Http().get("/Broadcaster/$pkBroadcaster");
     if(broadcastersResponse.statusCode == 200 && broadcastersResponse.data != null){
       return Broadcaster.fromJson(broadcastersResponse.data);
     }

@@ -50,6 +50,7 @@ class AppTheme {
         )
       ),
       colorScheme: ColorScheme.light(
+        primary: Colors.black,
         error: dangerColor,
       ),
       switchTheme: SwitchThemeData(
@@ -79,7 +80,7 @@ class AppTheme {
           return Colors.white;
         }),
 
-      )
+      ),
     );
 
     return theme.copyWith(textTheme: GoogleFonts.robotoTextTheme(theme.textTheme),);
