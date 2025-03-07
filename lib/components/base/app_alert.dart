@@ -70,7 +70,7 @@ class _AppAlertState extends State<AppAlert> {
           AnimatedPositioned(
             duration: Duration(milliseconds: animationMs),
             curve: Curves.easeInOut,
-            bottom: _isVisible ? 0 : -screenHeight * 0.3, // Slide down off-screen
+            bottom: _isVisible ? 10 : -screenHeight * 0.3, // Slide down off-screen
             left: 0,
             right: 0,
             child: GestureDetector(
@@ -85,7 +85,7 @@ class _AppAlertState extends State<AppAlert> {
               },
               onVerticalDragEnd: (details) {
                 // If dragged far enough down, dismiss the alert
-                if (_dragOffset > 100) {
+                if (_dragOffset > 20) {
                   AlertService().hideAlert();
                 } else {
                   // If not dragged far enough, return to the original position
@@ -107,18 +107,15 @@ class _AppAlertState extends State<AppAlert> {
     
   Widget getAlert()=>
     AppCard(
-      padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,
         children: [
           Flexible(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                alertOptions!.title, 
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
+            child: Text(
+              alertOptions!.title, 
+              style: Theme.of(context).textTheme.bodyLarge,
             )
           ),
           getIcon(),
