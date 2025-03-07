@@ -1,20 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:motogp_calendar/app_theme.dart';
-import 'package:motogp_calendar/components/app_card.dart';
+import 'package:motogp_calendar/components/base/app_card.dart';
 import 'package:motogp_calendar/services/alert.service.dart';
 import 'package:motogp_calendar/utils/enum/e_alert_status.dart';
 import 'package:motogp_calendar/utils/types/alert_options.dart';
 
-class Alert extends StatefulWidget {
+class AppAlert extends StatefulWidget {
 
-  const Alert({super.key});
+  const AppAlert({super.key});
 
   @override
-  State<Alert> createState() => _AlertState();
+  State<AppAlert> createState() => _AppAlertState();
 }
 
-class _AlertState extends State<Alert> {
+class _AppAlertState extends State<AppAlert> {
   double _dragOffset = 0.0;
   int animationMs = 300;
   AlertOptions? alertOptions;

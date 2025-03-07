@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:motogp_calendar/app_theme.dart';
-import 'package:motogp_calendar/components/accordion.dart';
-import 'package:motogp_calendar/components/accordion_list.dart';
+import 'package:motogp_calendar/components/base/app_accordion.dart';
+import 'package:motogp_calendar/components/base/app_accordion_list.dart';
 import 'package:motogp_calendar/models/broadcast.dart';
 import 'package:motogp_calendar/models/broadcaster.dart';
 import 'package:motogp_calendar/models/category.dart';
@@ -163,9 +163,9 @@ class _EventDetailState extends State<EventDetail> {
                   //LIST OF BROADCASTS
                   Visibility(
                     visible: groupedBroadcasts.isNotEmpty,
-                    child: AccordionList(
-                      items: groupedBroadcasts.entries.map<Accordion>((entry) => 
-                        Accordion(
+                    child: AppAccordionList(
+                      items: groupedBroadcasts.entries.map<AppAccordion>((entry) => 
+                        AppAccordion(
                           title: toBeginningOfSentenceCase(dayFormat.format(entry.key)),
                           child: Column(
                             spacing: 8,

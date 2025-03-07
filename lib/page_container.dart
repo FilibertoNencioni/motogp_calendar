@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:motogp_calendar/l10n/generated/app_localizations.dart';
-import 'package:motogp_calendar/components/alert.dart';
+import 'package:motogp_calendar/components/base/app_alert.dart';
 
 class PageContainer extends StatelessWidget{
   final StatefulNavigationShell navigationShell;
@@ -22,7 +22,7 @@ class PageContainer extends StatelessWidget{
             ),
             child: Align(
               alignment: Alignment.bottomCenter,
-              child: Alert(),
+              child: AppAlert(),
             )
           )
         ]

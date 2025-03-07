@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:motogp_calendar/app_theme.dart';
-import 'package:motogp_calendar/components/app_card.dart';
+import 'package:motogp_calendar/components/base/app_card.dart';
 import 'package:motogp_calendar/models/event.dart';
 import 'package:motogp_calendar/utils/enum/e_event_status.dart';
 import 'package:motogp_calendar/l10n/generated/app_localizations.dart';

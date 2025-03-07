@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:motogp_calendar/components/accordion.dart';
+import 'package:motogp_calendar/components/base/app_accordion.dart';
 
-class AccordionList extends StatefulWidget{
-  final List<Accordion> items;
-  const AccordionList({super.key, required this.items});
+class AppAccordionList extends StatefulWidget{
+  final List<AppAccordion> items;
+  const AppAccordionList({super.key, required this.items});
 
   @override
-  AccordionListState createState() => AccordionListState();
+  AppAccordionListState createState() => AppAccordionListState();
 }
 
-class AccordionListState extends State<AccordionList> with TickerProviderStateMixin {
+class AppAccordionListState extends State<AppAccordionList> with TickerProviderStateMixin {
   List<String> openedAccordion = [];
   
   ///Contiene i controller per le animations. Ogniuno corrisponde ad un signolo accordion.
@@ -38,7 +38,7 @@ class AccordionListState extends State<AccordionList> with TickerProviderStateMi
   }
 
 
-  toggleAccordion(Accordion accordion){
+  toggleAccordion(AppAccordion accordion){
     List<String> tmpOpenedAccordion = openedAccordion;
     if(isAccordionOpened(accordion.title)){
       tmpOpenedAccordion.remove(accordion.title);

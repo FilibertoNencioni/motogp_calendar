@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:motogp_calendar/app_theme.dart';
-import 'package:motogp_calendar/components/app_card.dart';
+import 'package:motogp_calendar/components/base/app_card.dart';
 
-class Select<T> extends StatefulWidget{
+class AppSelect<T> extends StatefulWidget{
   /// Select label
   final String label;
 
@@ -29,13 +29,13 @@ class Select<T> extends StatefulWidget{
   /// Info text (shown by an info icon after the select title)
   final String? infoText;
   
-  const Select({super.key, required this.label, required this.value, required this.items, this.onChanged, required this.displayItem, this.itemNotSelectedStyle, this.itemSelectedStyle, this.infoText});
+  const AppSelect({super.key, required this.label, required this.value, required this.items, this.onChanged, required this.displayItem, this.itemNotSelectedStyle, this.itemSelectedStyle, this.infoText});
   
   @override
-  State<Select<T>> createState() => _SelectState<T>();
+  State<AppSelect<T>> createState() => _AppSelectState<T>();
 }
 
-class _SelectState<T> extends State<Select<T>> with TickerProviderStateMixin{
+class _AppSelectState<T> extends State<AppSelect<T>> with TickerProviderStateMixin{
   bool isExpanded = false;
   late AnimationController arrowAnimationController;
 

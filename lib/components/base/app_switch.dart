@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:motogp_calendar/app_theme.dart';
-import 'package:motogp_calendar/components/app_card.dart';
+import 'package:motogp_calendar/components/base/app_card.dart';
 
 class CardSwitch extends StatefulWidget{
   /// Select label

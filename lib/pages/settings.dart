@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:motogp_calendar/components/card_switch.dart';
-import 'package:motogp_calendar/components/select.dart';
+import 'package:motogp_calendar/components/base/app_switch.dart';
+import 'package:motogp_calendar/components/base/app_select.dart';
 import 'package:motogp_calendar/models/broadcaster.dart';
 import 'package:motogp_calendar/services/alert.service.dart';
 import 'package:motogp_calendar/services/broadcaster.service.dart';
@@ -61,7 +61,7 @@ class SettingsState extends State<Settings> {
             ),
             SizedBox(height: 32,),
 
-            Select(
+            AppSelect(
               label:AppLocalizations.of(context)!.changeAppLanguage,
               value: selectedLocale,
               displayItem: (t)=>t.displayName,
@@ -71,7 +71,7 @@ class SettingsState extends State<Settings> {
 
             SizedBox(height: 32,),
 
-            Select(
+            AppSelect(
               label: AppLocalizations.of(context)!.changeDefaultBroadcasters,
               value: selectedBroadcaster,
               displayItem: (b)=>"${b?.countryEmoji} ${b?.name}",

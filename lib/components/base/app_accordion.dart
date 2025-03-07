@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class Accordion{
+class AppAccordion{
   String title;
   Widget child;
 
-  Accordion({
+  AppAccordion({
     required this.title, 
     required this.child
   });
