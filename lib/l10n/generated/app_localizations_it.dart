@@ -24,7 +24,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get unexpectedError => 'Si è verificato un errore inaspettato, riprova più tardi';
 
   @override
-  String get changeBroadcaster => 'Change emittente';
+  String get changeBroadcaster => 'Cambia emittente';
 
   @override
   String get changeDefaultBroadcasters => 'Cambia l\'emittente principale';
