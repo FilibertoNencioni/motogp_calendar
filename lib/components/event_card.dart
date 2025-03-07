@@ -1,12 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:motogp_calendar/app_theme.dart';
+import 'package:motogp_calendar/components/base/app_cached_image.dart';
 import 'package:motogp_calendar/components/base/app_card.dart';
 import 'package:motogp_calendar/models/event.dart';
 import 'package:motogp_calendar/utils/enum/e_event_status.dart';
 import 'package:motogp_calendar/l10n/generated/app_localizations.dart';
-import 'package:shimmer/shimmer.dart';
 
 class EventCard extends StatelessWidget{
   final Event event;
@@ -60,34 +59,9 @@ class EventCard extends StatelessWidget{
             children: [
 
               //IMAGE
-              ClipRRect(
-                borderRadius: BorderRadius.circular(24),
-                child: event.circuit.placeholderPath != null ?
-                  CachedNetworkImage(
-                    imageUrl: event.circuit.placeholderPath!, 
-                    alignment: Alignment.bottomCenter,
-                    fit: BoxFit.cover,
-                    height: 130,
-                    width: double.infinity,
-                    placeholder: (c, url)=> Shimmer.fromColors(
-                      baseColor: Colors.grey.shade300, 
-                      highlightColor: AppTheme.appLightGrey,
-                      child: imagePlaceholder(context, children: []), 
-                    ),
-                    errorWidget: (c, url, err)=> imagePlaceholder(
-                      context, 
-                      children: [
-                        Icon(Icons.warning_rounded, color: AppTheme.appGrey),
-                      ]
-                    ),
-                  ) :
-                  imagePlaceholder(
-                    context,
-                    children: [
-                      Icon(Icons.question_mark_rounded, color: AppTheme.appGrey),
-                    ]
-                  )
-                  
+              AppCachedImage(
+                url: event.circuit.placeholderPath,
+                height: 130,
               ),
 
               //LIVE INFO
@@ -199,20 +173,6 @@ class EventCard extends StatelessWidget{
     );
   }
 
-  Widget imagePlaceholder(BuildContext context, {required List<Widget> children}) =>
-    Container(
-      width: double.infinity,
-      height: 130,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
-        color: AppTheme.appLightGrey
-      ),
-      child: Column(
-        spacing: 8,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: children
-      ),
-    );
 
   
 }

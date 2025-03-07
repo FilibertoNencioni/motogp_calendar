@@ -1,12 +1,11 @@
 import 'dart:async';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:motogp_calendar/app_theme.dart';
 import 'package:motogp_calendar/components/base/app_accordion.dart';
 import 'package:motogp_calendar/components/base/app_accordion_list.dart';
+import 'package:motogp_calendar/components/base/app_cached_image.dart';
 import 'package:motogp_calendar/models/broadcast.dart';
 import 'package:motogp_calendar/models/broadcaster.dart';
 import 'package:motogp_calendar/models/category.dart';
@@ -139,7 +138,7 @@ class _EventDetailState extends State<EventDetail> {
                   SizedBox(height: 12,),
 
 
-                  //PROVIDER SELEZIONATO
+                  //SELECTED PROVIDER
                   SizedBox(
                     width: double.infinity,
                     child: Text("${AppLocalizations.of(context)!.selectedBroadcaster}: ${selectedBroadcaster != null? _getBroadcasterName(selectedBroadcaster!) : ""}"),
@@ -147,16 +146,10 @@ class _EventDetailState extends State<EventDetail> {
                   SizedBox(height: 12,),
 
 
-                  //IMMAGINE
-                  Container(
+                  //IMAGE
+                  AppCachedImage(
+                    url: widget.event.circuit.placeholderPath,
                     height: 200,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(24),
-                      image: (widget.event.circuit.placeholderPath != null)?DecorationImage(
-                        image: CachedNetworkImageProvider(widget.event.circuit.placeholderPath!),
-                        fit:BoxFit.cover,
-                      ): null,
-                    ),
                   ),
                   SizedBox(height: 12,),
 
