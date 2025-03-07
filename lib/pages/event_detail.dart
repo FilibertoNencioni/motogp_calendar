@@ -6,6 +6,7 @@ import 'package:motogp_calendar/app_theme.dart';
 import 'package:motogp_calendar/components/base/app_accordion.dart';
 import 'package:motogp_calendar/components/base/app_accordion_list.dart';
 import 'package:motogp_calendar/components/base/app_cached_image.dart';
+import 'package:motogp_calendar/components/base/app_card.dart';
 import 'package:motogp_calendar/models/broadcast.dart';
 import 'package:motogp_calendar/models/broadcaster.dart';
 import 'package:motogp_calendar/models/category.dart';
@@ -28,9 +29,11 @@ class EventDetail extends StatefulWidget{
 class _EventDetailState extends State<EventDetail> {
   Map<DateTime, List<Broadcast>> groupedBroadcasts = {};
   List<Category> categories = [];
-  Broadcaster? selectedBroadcaster;
 
-  //TODO: enable change broadcaster in this page
+  ///List of all broadcasters
+  List<Broadcaster> broadcasters = [];
+  
+  Broadcaster? selectedBroadcaster;
 
   @override
   void initState() {
@@ -95,7 +98,6 @@ class _EventDetailState extends State<EventDetail> {
   }
 
   String _getCatName(int pkCategory) => categories.firstWhere((c)=>c.pkCategory == pkCategory).name;
-  String _getBroadcasterName(Broadcaster b) => "${b.countryEmoji} ${b.name}";
 
   @override
   Widget build(BuildContext context) {
@@ -126,6 +128,7 @@ class _EventDetailState extends State<EventDetail> {
               padding: EdgeInsets.symmetric(horizontal: 18),
               clipBehavior: Clip.hardEdge ,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   //TITLE
                   SizedBox(
@@ -139,9 +142,19 @@ class _EventDetailState extends State<EventDetail> {
 
 
                   //SELECTED PROVIDER
-                  SizedBox(
-                    width: double.infinity,
-                    child: Text("${AppLocalizations.of(context)!.selectedBroadcaster}: ${selectedBroadcaster != null? _getBroadcasterName(selectedBroadcaster!) : ""}"),
+                  OutlinedButton(
+                    onPressed: ()=>handleChangeBroadcasterTap(), 
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(text: AppLocalizations.of(context)!.changeBroadcaster),
+                          TextSpan(
+                            text: " (${selectedBroadcaster?.name ?? ""} ${selectedBroadcaster?.countryEmoji ?? ""})", 
+                            style: TextStyle(fontWeight: FontWeight.bold)
+                          ),
+                        ]
+                      )
+                    )
                   ),
                   SizedBox(height: 12,),
 
@@ -226,5 +239,68 @@ class _EventDetailState extends State<EventDetail> {
         ]
       )
     );
+  }
+
+
+  void handleChangeBroadcasterTap() async {
+    if(broadcasters.isEmpty){
+      List<Broadcaster> tmpBroadcasters = await BroadcasterService.get();
+      setState(()=>broadcasters = tmpBroadcasters);
+    }
+
+    List<Broadcaster> availableBroadcasters = broadcasters
+        .where((x)=>x.pkBroadcaster != (selectedBroadcaster?.pkBroadcaster ?? 0))
+        .toList();
+
+    if(mounted){
+      showAdaptiveDialog(
+        context: context, 
+        builder: (c) => Dialog(
+          child: AppCard(
+            padding: EdgeInsets.all(14),
+            child: Wrap(
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 8,
+                  children: [
+                    //Title
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          AppLocalizations.of(context)!.selectBroadcaster,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        )
+                      ),
+                    ),
+
+                    //CONTENT
+                    ListView.separated(
+                      clipBehavior: Clip.none,
+                      shrinkWrap: true,
+                      itemCount: availableBroadcasters.length,
+                      separatorBuilder: (c, i)=> SizedBox(height: 4,), 
+                      itemBuilder: (c, i)=>
+                        TextButton(
+                          style: Theme.of(context).textButtonTheme.style?.copyWith(padding: WidgetStateProperty.all(EdgeInsets.zero)),
+                          child: Text("${availableBroadcasters[i].countryEmoji} ${availableBroadcasters[i].name}", style: Theme.of(context).textTheme.bodyLarge),
+                          onPressed: () {
+                            handleBroadcasterChange(availableBroadcasters[i]);
+                            context.pop();
+                          },
+                        ),
+                    )
+                    
+                  ],
+                ) 
+              ]
+            )
+          )
+        )
+      );
+    }
   }
 }

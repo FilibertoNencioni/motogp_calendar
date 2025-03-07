@@ -24,6 +24,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unexpectedError => 'An unexpected error has occurred, please try again later';
 
   @override
+  String get changeBroadcaster => 'Change broadcaster';
+
+  @override
   String get changeDefaultBroadcasters => 'Change the default broadcaster';
 
   @override
@@ -31,6 +34,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get broadcasterInfoText => 'The selected broadcaster will be used as the default for retrieving the schedules of the various races.';
+
+  @override
+  String get selectBroadcaster => 'Select a broadcaster';
 
   @override
   String get selectedBroadcaster => 'Selected broadcaster';

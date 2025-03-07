@@ -24,6 +24,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get unexpectedError => 'Si è verificato un errore inaspettato, riprova più tardi';
 
   @override
+  String get changeBroadcaster => 'Change emittente';
+
+  @override
   String get changeDefaultBroadcasters => 'Cambia l\'emittente principale';
 
   @override
@@ -31,6 +34,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get broadcasterInfoText => 'L\'emittente selezionato sarà utilizzato come predefinito per il recupero degli orari delle varie gare.';
+
+  @override
+  String get selectBroadcaster => 'Seleziona un\'emittente';
 
   @override
   String get selectedBroadcaster => 'Emittente selezionato';

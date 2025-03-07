@@ -125,6 +125,12 @@ abstract class AppLocalizations {
   /// **'An unexpected error has occurred, please try again later'**
   String get unexpectedError;
 
+  /// No description provided for @changeBroadcaster.
+  ///
+  /// In en, this message translates to:
+  /// **'Change broadcaster'**
+  String get changeBroadcaster;
+
   /// No description provided for @changeDefaultBroadcasters.
   ///
   /// In en, this message translates to:
@@ -142,6 +148,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The selected broadcaster will be used as the default for retrieving the schedules of the various races.'**
   String get broadcasterInfoText;
+
+  /// No description provided for @selectBroadcaster.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a broadcaster'**
+  String get selectBroadcaster;
 
   /// No description provided for @selectedBroadcaster.
   ///
