@@ -20,12 +20,15 @@ class AppAccordionListState extends State<AppAccordionList> with TickerProviderS
   @override
   void initState() {
     super.initState();
+    updateAnimationControllers();
+  }
 
-    for (var i = 0; i<widget.items.length; i++) {
-      iconsAnimationControllers.add(AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 150),
-    ));
+  @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if(oldWidget.items.length != widget.items.length){
+      updateAnimationControllers();
     }
   }
 
@@ -37,6 +40,15 @@ class AppAccordionListState extends State<AppAccordionList> with TickerProviderS
     }
   }
 
+  void updateAnimationControllers(){
+    List<AnimationController> tmpIconsAnimationControllers = 
+      widget.items.map((e)=> AnimationController(
+        vsync: this, 
+        duration: Duration(microseconds: 150)
+      )).toList();
+    
+    setState(()=> iconsAnimationControllers = tmpIconsAnimationControllers);
+  }
 
   toggleAccordion(AppAccordion accordion){
     List<String> tmpOpenedAccordion = openedAccordion;
