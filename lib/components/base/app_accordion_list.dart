@@ -59,8 +59,9 @@ class AppAccordionListState extends State<AppAccordionList> with TickerProviderS
         children: [
           //HEADER
           GestureDetector(
+            behavior: HitTestBehavior.opaque,
             onTap: () => toggleAccordion(e),
-            child: Container(
+            child: Padding(
               padding: EdgeInsets.symmetric(vertical: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
