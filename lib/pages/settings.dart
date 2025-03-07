@@ -117,8 +117,7 @@ class SettingsState extends State<Settings> {
     UserPreferences.setBroadcaster(broadcatser);    
     AlertService().showAlert(AlertOptions(
       status: EAlertStatus.success, 
-      title: AppLocalizations.of(context)!.broadcasterChanged,
-      duration: Duration(minutes: 1)
+      title: AppLocalizations.of(context)!.broadcasterChanged
     ));
   }
 
