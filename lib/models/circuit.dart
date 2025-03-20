@@ -1,3 +1,5 @@
+import 'package:motogp_calendar/utils/date_parser.dart';
+
 class Circuit{
   int pkCircuit;
   String guid;
@@ -26,7 +28,7 @@ class Circuit{
     country: json['country'],
     flagPath: json['flagPath'],
     placeholderPath: json['placeholderPath'],
-    doi: json['doi'] != null ? DateTime.parse(json['doi']) : null,
-    dou: json['dou'] != null ? DateTime.parse(json['dou']) : null,
+    doi: json['doi'] != null ? DateParser.parseUTCDate(json['doi']) : null,
+    dou: json['dou'] != null ? DateParser.parseUTCDate(json['dou']) : null,
   );
 }

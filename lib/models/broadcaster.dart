@@ -1,3 +1,5 @@
+import 'package:motogp_calendar/utils/date_parser.dart';
+
 class Broadcaster {
   int pkBroadcaster;
   String name;
@@ -17,8 +19,8 @@ class Broadcaster {
     pkBroadcaster: json['pkBroadcaster'] as int,
     name: json['name'],
     countryEmoji: json['countryEmoji'],
-    doi: DateTime.parse(json['doi']),
-    dou: json['dou'] != null ? DateTime.parse(json['dou']) : null
+    doi: DateParser.parseUTCDate(json['doi']),
+    dou: json['dou'] != null ? DateParser.parseUTCDate(json['dou']) : null
   );
 
   Map<String, dynamic> toJson() {

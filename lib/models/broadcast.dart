@@ -1,3 +1,5 @@
+import '../utils/date_parser.dart';
+
 class Broadcast{
   int pkBroadcast;
   int fkEvent;
@@ -33,9 +35,9 @@ class Broadcast{
     guid: json['guid'],
     name: json['name'],
     isLive: json['isLive'],
-    startDate: DateTime.parse(json['startDate']),
-    endDate: json['endDate'] == null ? null : DateTime.parse(json['endDate']),
-    doi: DateTime.parse(json['doi']),
-    dou: json['dou'] == null ? null : DateTime.parse(json['dou']),
+    startDate: DateParser.parseUTCDate(json['startDate']),
+    endDate: json['endDate'] == null ? null : DateParser.parseUTCDate(json['endDate']),
+    doi: DateParser.parseUTCDate(json['doi']),
+    dou: json['dou'] == null ? null : DateParser.parseUTCDate(json['dou']),
   );
 }

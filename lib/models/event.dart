@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:motogp_calendar/models/circuit.dart';
+import 'package:motogp_calendar/utils/date_parser.dart';
 import 'package:motogp_calendar/utils/enum/e_event_status.dart';
 
 class Event{
@@ -42,11 +43,11 @@ class Event{
     name: json["name"],
     kind: json["kind"],
     season: json["season"],
-    startDate: DateTime.parse(json["startDate"]),
-    endDate: DateTime.parse(json["endDate"]),
+    startDate: DateParser.parseUTCDate(json["startDate"]),
+    endDate: DateParser.parseUTCDate(json["endDate"]),
     isDismissed: json["isDismissed"],
-    doi: DateTime.parse(json["doi"]),
-    dou: json["dou"] != null ? DateTime.parse(json["dou"]) : null,
+    doi: DateParser.parseUTCDate(json["doi"]),
+    dou: json["dou"] != null ? DateParser.parseUTCDate(json["dou"]) : null,
     circuit: Circuit.fromJson(json["circuit"]),
     isLive: json["isLive"]
   );

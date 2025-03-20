@@ -1,3 +1,5 @@
+import 'package:motogp_calendar/utils/date_parser.dart';
+
 class Category {
   int pkCategory;
   String guid;
@@ -20,8 +22,8 @@ class Category {
     guid: json['guid'],
     name: json['name'],
     acronym: json['acronym'],
-    doi: DateTime.parse(json['doi']),
-    dou: json['dou'] != null ? DateTime.parse(json['dou']) : null
+    doi: DateParser.parseUTCDate(json['doi']),
+    dou: json['dou'] != null ? DateParser.parseUTCDate(json['dou']) : null
   );
 
   Map<String, dynamic> toJson() {
