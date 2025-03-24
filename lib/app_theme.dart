@@ -21,7 +21,7 @@ class AppTheme {
     ThemeData theme = ThemeData(
       useMaterial3: true,
       primaryColor: Colors.black,
-      scaffoldBackgroundColor: Colors.white,
+      scaffoldBackgroundColor: Color(0xFFFDFDFD),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: Colors.white,
         selectedItemColor: Colors.black,
