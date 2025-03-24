@@ -66,13 +66,16 @@ class _AppAlertState extends State<AppAlert> {
 
     return Stack(
       children: [
-        if (alertOptions != null) // Only show the alert when there are options
-          AnimatedPositioned(
-            duration: Duration(milliseconds: animationMs),
-            curve: Curves.easeInOut,
-            bottom: _isVisible ? 10 : -screenHeight * 0.3, // Slide down off-screen
-            left: 0,
-            right: 0,
+
+        //Show always (ready for animations)
+        AnimatedPositioned(
+          duration: Duration(milliseconds: animationMs),
+          curve: Curves.easeInOut,
+          bottom: _isVisible ? 30 : -screenHeight * 0.3, // Slide down off-screen
+          left: 0,
+          right: 0,
+          child: Visibility( //Shows only if has content (the animation has to be already built)
+            visible: alertOptions != null,
             child: GestureDetector(
               onVerticalDragUpdate: (details) {
                 // Update the position based on the user's drag
@@ -99,7 +102,9 @@ class _AppAlertState extends State<AppAlert> {
                 child: getAlert(),
               ),
             ),
-          ),
+          )
+        ),
+          
       ],
     );
   }
@@ -114,7 +119,7 @@ class _AppAlertState extends State<AppAlert> {
         children: [
           Flexible(
             child: Text(
-              alertOptions!.title, 
+              alertOptions?.title ?? "", 
               style: Theme.of(context).textTheme.bodyLarge,
             )
           ),
