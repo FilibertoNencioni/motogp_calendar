@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:motogp_calendar/l10n/generated/app_localizations.dart';
-import 'package:motogp_calendar/components/base/app_alert.dart';
 
 class PageContainer extends StatelessWidget{
   final StatefulNavigationShell navigationShell;
@@ -10,23 +9,8 @@ class PageContainer extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:Stack(
-        children: [
-          SafeArea(child: navigationShell),
-
-          //APP ALERT
-          Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: 8,
-              horizontal: 28
-            ),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: AppAlert(),
-            )
-          )
-        ]
-      ),
+      body:SafeArea(child: navigationShell),
+ 
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
           splashColor: Colors.transparent,

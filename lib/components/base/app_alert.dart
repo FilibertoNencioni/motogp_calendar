@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:motogp_calendar/app_theme.dart';
 import 'package:motogp_calendar/components/base/app_card.dart';
-import 'package:motogp_calendar/services/alert.service.dart';
+import 'package:motogp_calendar/controllers/alert_controller.dart';
 import 'package:motogp_calendar/utils/enum/e_alert_status.dart';
 import 'package:motogp_calendar/utils/types/alert_options.dart';
 
@@ -25,7 +25,7 @@ class _AppAlertState extends State<AppAlert> {
     super.initState();
 
     //Allow change options on runtime
-    AlertService().registerOnUpdate((option) {
+    AlertController().init((option) {
       if(option != null){
         setState(() {
           alertOptions = option;
@@ -89,7 +89,7 @@ class _AppAlertState extends State<AppAlert> {
               onVerticalDragEnd: (details) {
                 // If dragged far enough down, dismiss the alert
                 if (_dragOffset > 20) {
-                  AlertService().hideAlert();
+                  AlertController().hide();
                 } else {
                   // If not dragged far enough, return to the original position
                   setState(() {

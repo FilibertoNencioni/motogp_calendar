@@ -5,8 +5,8 @@ import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:motogp_calendar/services/alert.service.dart';
+import 'package:motogp_calendar/controllers/alert_controller.dart';
+import 'package:motogp_calendar/controllers/loader_controller.dart';
 import 'package:motogp_calendar/utils/app_router.dart';
 import 'package:motogp_calendar/utils/enum/e_alert_status.dart';
 import 'package:motogp_calendar/utils/types/alert_options.dart';
@@ -18,7 +18,6 @@ class Http {
   
   // Dio instance
   late Dio _http;
-  static int _pendingRequests = 0;
 
   // Private constructor
   Http._internal() {
@@ -53,26 +52,26 @@ class Http {
         onRequest: (RequestOptions options, RequestInterceptorHandler handler) {
           bool useLoading = options.extra["useLoading"] ?? true;
           if (useLoading) {
-            _addPendingRequest();
+            LoaderController().addRequest();
           }
           return handler.next(options);
         },
         onResponse: (Response response, ResponseInterceptorHandler handler) {
           bool useLoading = response.requestOptions.extra["useLoading"] ?? true;
           if (useLoading) {
-            _deletePendingRequest();
+            LoaderController().removeRequest();
           }          
           return handler.next(response);
         },
         onError: (DioException error, ErrorInterceptorHandler handler) {
           bool useLoading = error.requestOptions.extra["useLoading"] ?? true;
           if (useLoading) {
-            _deletePendingRequest();
+            LoaderController().removeRequest();
           }
 
           BuildContext? context = AppRouter.router.configuration.navigatorKey.currentState?.context;
           if(context != null){
-            AlertService().showAlert(AlertOptions(status: EAlertStatus.error, title:AppLocalizations.of(context)!.unexpectedError ));
+            AlertController().show(AlertOptions(status: EAlertStatus.error, title:AppLocalizations.of(context)!.unexpectedError ));
           }
 
           return handler.next(error);
@@ -81,23 +80,6 @@ class Http {
     );
   }
 
-  void _addPendingRequest() {
-    if (_pendingRequests == 0) {
-      EasyLoading.show();
-    }
-    _pendingRequests++;
-  }
-
-  void _deletePendingRequest() {
-    if (_pendingRequests <= 0) {
-      return;
-    }
-
-    if (_pendingRequests == 1) {
-      EasyLoading.dismiss();
-    }
-    _pendingRequests--;
-  }
 
   // HTTP Methods
   Future<Response<T>> get<T>(String path, {Map<String, dynamic>? queryParams, bool useLoading = true}) {

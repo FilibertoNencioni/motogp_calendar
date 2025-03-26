@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:motogp_calendar/app_theme.dart';
+import 'package:motogp_calendar/components/base/app_alert.dart';
+import 'package:motogp_calendar/components/base/app_loader.dart';
 import 'package:motogp_calendar/l10n/my_l10n.dart';
 import 'package:motogp_calendar/utils/app_router.dart';
 import 'package:motogp_calendar/utils/constants.dart';
@@ -17,30 +18,6 @@ void main() async {
   await UserPreferences.initUserPreferences();
   initializeDateFormatting();
   
-  //Modifica dello spinner di caricamento
-  EasyLoading.instance
-    ..indicatorType = EasyLoadingIndicatorType.ring
-    ..loadingStyle = EasyLoadingStyle.custom
-    ..indicatorSize = 45.0
-    ..indicatorWidget = Container(
-      padding: EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        shape: BoxShape.circle
-      ),
-      child: CircularProgressIndicator(
-        strokeWidth: 4,
-        strokeCap: StrokeCap.round,
-      )
-    )
-    ..indicatorColor = Colors.black
-    ..radius = 10.0
-    ..progressColor = Colors.black
-    ..backgroundColor = Colors.transparent
-    ..textColor = Colors.black
-    ..boxShadow = []
-    ..dismissOnTap = false;
-
   runApp(const MyApp());
 }
 
@@ -67,7 +44,6 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp.router(
         title: 'Moto Calendar',
         debugShowCheckedModeBanner: false,
-        builder: EasyLoading.init(),
         theme: AppTheme.getTheme(),
         routerConfig: AppRouter.router,
         supportedLocales: appLocales.map((e)=>e.locale),
@@ -78,6 +54,31 @@ class _MyAppState extends State<MyApp> {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
+        builder: (context, child) => Stack(
+          children: [
+            //PAGE CONTENT
+            child ?? Container(),
+
+            //APP LOADING
+            Align(
+              alignment: Alignment.center,
+              child: AppLoader()
+            ),
+            
+            //APP ALERT
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 8,
+                horizontal: 28
+              ),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: AppAlert(),
+              )
+            ),
+          ],
+        )
       )
-    );    
+    );
+
 }

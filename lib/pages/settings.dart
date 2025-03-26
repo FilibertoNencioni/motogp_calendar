@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:motogp_calendar/components/base/app_switch.dart';
 import 'package:motogp_calendar/components/base/app_select.dart';
 import 'package:motogp_calendar/models/broadcaster.dart';
-import 'package:motogp_calendar/services/alert.service.dart';
+import 'package:motogp_calendar/controllers/alert_controller.dart';
 import 'package:motogp_calendar/services/broadcaster.service.dart';
 import 'package:motogp_calendar/utils/constants.dart';
 import 'package:motogp_calendar/utils/enum/e_alert_status.dart';
@@ -102,7 +102,7 @@ class SettingsState extends State<Settings> {
       Duration(milliseconds: 100), 
       () {
         if(mounted){
-          AlertService().showAlert(AlertOptions(status: EAlertStatus.success, title: AppLocalizations.of(context)!.languageChanged));
+          AlertController().show(AlertOptions(status: EAlertStatus.success, title: AppLocalizations.of(context)!.languageChanged));
         }
       }
     );
@@ -115,7 +115,7 @@ class SettingsState extends State<Settings> {
 
     setState(()=>selectedBroadcaster = broadcatser);
     UserPreferences.setBroadcaster(broadcatser);    
-    AlertService().showAlert(AlertOptions(
+    AlertController().show(AlertOptions(
       status: EAlertStatus.success, 
       title: AppLocalizations.of(context)!.broadcasterChanged
     ));
@@ -124,7 +124,7 @@ class SettingsState extends State<Settings> {
   void handleChangeGetDismissed(bool newValue) {
     setState(()=>selectedGetDismissed = newValue);
     UserPreferences.setDismissedEvent(newValue);    
-    AlertService().showAlert(AlertOptions(
+    AlertController().show(AlertOptions(
       status: EAlertStatus.success, 
       title: AppLocalizations.of(context)!.generalOptionChanged
     ));
